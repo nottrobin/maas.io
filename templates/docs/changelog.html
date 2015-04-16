@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="changelog">Changelog</h1>
 <h2 id="section">1.7.3</h2>
 <h3 id="bug-fix-update">Bug Fix Update</h3>
@@ -492,3 +497,4 @@
 <p>#1233833 Usability: deleting nodes is too easy</p>
 <p>#1185897 expose ability to re-commission node in api and cli</p>
 <p>#997092 Can't delete allocated node even if owned by self</p>
+{% endblock %}

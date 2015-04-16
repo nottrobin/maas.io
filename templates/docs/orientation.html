@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="orientation">Orientation</h1>
 <h2 id="maas-in-brief">MAAS in Brief</h2>
 <p>Canonical’s MAAS brings the dynamism of cloud computing to the world of physical provisioning and Ubuntu. Connect, commission and deploy physical servers in record time, re-allocate nodes between services dynamically, and keep them up to date and in due course, retire them from use.</p>
@@ -41,3 +46,4 @@
 <p>When allocating from the API, you can specify constraints such as how much memory you need, how many CPUs, what networks the node should be connected to, what physical zone they should be in, and so on. API commands can also be issued through the <code>maas</code> command-line utility.</p>
 <p>An allocated node is not like a virtual instance in a cloud: you get complete control, including hardware drivers and root access. To upgrade a BIOS, for example, an administrator could allocate a node to themselves, and run a vendor-supplied upgrade utility. Needless to say, you also get full hardware performance and tweaking!</p>
 <p>Once you are done with a node you have allocated, you can release it back to the pool. Once again any data, software, or operating system will no longer be available.</p>
+{% endblock %}

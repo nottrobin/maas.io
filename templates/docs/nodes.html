@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="adding-nodes-to-the-system">Adding nodes to the system</h1>
 <p>Now that the MAAS controller is running, we need to make the nodes aware of MAAS and vice-versa. If you have set up DHCP correctly, and your nodes can boot via <a href="http://en.wikipedia.org/wiki/Preboot_Execution_Environment">PXE</a> then things really couldn't be much easier and you can use the automatic discovery procedure &lt;auto-enlist&gt;. You do not need to install Ubuntu on nodes that you wish to add to MAAS prior to enlistment.</p>
 <p>To learn more about setting up DHCP, read the cluster configuration
@@ -34,3 +39,4 @@ $ ssh-keygen</code></pre>
 <pre><code>$ ssh-copy-id -i ~/.ssh/id_rsa ubuntu@10.0.0.2</code></pre>
 <p>As the maas user, test virsh commands against libvirt at 10.0.0.2:</p>
 <pre><code>$ virsh -c qemu+ssh://ubuntu@10.0.0.2/system list --all</code></pre>
+{% endblock %}

@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="hacking-maas">Hacking MAAS</h1>
 <h2 id="coding-style">Coding style</h2>
 <p>MAAS follows the <a href="https://dev.launchpad.net/PythonStyleGuide">Launchpad Python Style Guide</a>, except where it gets Launchpad specific, and where it talks about <a href="https://dev.launchpad.net/PythonStyleGuide#Naming">method naming</a>. MAAS instead adopts <a href="http://www.python.org/dev/peps/pep-0008/">PEP-8</a> naming in all cases, so method names should usually use the <code>lowercase_with_underscores</code> form.</p>
@@ -170,3 +175,4 @@ $ make stop</code></pre>
 (2 rows)</code></pre>
 <h2 id="documentation">Documentation</h2>
 <p>Use <a href="http://sphinx.pocoo.org/rest.html">reST</a> with the <a href="http://sphinx.pocoo.org/rest.html#sections">convention for headings as used in the Python documentation</a>.</p>
+{% endblock %}

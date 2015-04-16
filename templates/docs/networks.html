@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="networks">Networks</h1>
 <blockquote>
 <p><strong>note</strong></p>
@@ -53,3 +58,4 @@
 <li>&quot;<code>vlan:13</code>&quot;: a VLAN tag. This can only be used for VLANs, so the tag must be nonzero. The tag is a number between 1 to 4094 inclusive.</li>
 <li>&quot;<code>vlan:0x0d</code>&quot;: a VLAN tag in hexadecimal notation. The valid range is from <code>0x1</code> to <code>0xffe</code> inclusive. The notation is case-insensitive and leading zeroes are ignored. So, <code>vlan:0x0d</code>, <code>vlan:0Xd</code>, <code>vlan:0xD</code>, and <code>vlan:0X0d</code> are all equivalent to <code>vlan:13</code>.</li>
 </ul>
+{% endblock %}

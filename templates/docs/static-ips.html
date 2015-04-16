@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="static-ips">Static IPs</h1>
 <blockquote>
 <p><strong>note</strong></p>
@@ -24,3 +29,4 @@
 </dl>
 <p>This API allows users to request an ad-hoc IP address for use in any way they see fit. The IP is not tied to any node in MAAS and is guaranteed not to be in use by MAAS itself.</p>
 <p>See the full api documentation for precise technical details.</p>
+{% endblock %}

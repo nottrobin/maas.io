@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="api-authentication">API authentication</h1>
 <p>MAAS's API uses <a href="http://en.wikipedia.org/wiki/OAuth">OAuth</a> as its authentication mechanism. There isn't a third party involved (as in 3-legged OAuth) and so the process used is what's commonly referred to as 0-legged OAuth: the consumer accesses protected resources by submitting OAuth signed requests.</p>
 <p>Note that some API endpoints support unauthenticated requests (i.e. anonymous access). See the API documentation &lt;api&gt; for details.</p>
@@ -46,3 +51,4 @@ require <span class="st">&#39;oauth/signature/plaintext&#39;</span>
 response = perform_API_request(
      <span class="st">&quot;http://server/MAAS/api/1.0&quot;</span>, <span class="st">&quot;/nodes/?op=list&quot;</span>, <span class="st">&quot;&lt;key&gt;&quot;</span>, <span class="st">&quot;&lt;secret&gt;&quot;</span>,
      <span class="st">&quot;consumer_key&gt;&quot;</span>)</code></pre>
+{% endblock %}

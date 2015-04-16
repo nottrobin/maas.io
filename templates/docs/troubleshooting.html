@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="maas-troubleshooting">MAAS Troubleshooting</h1>
 <p>Some parts of MAAS may still be a little confusing, and sometimes you might be trying to do things that are just plain impossible. This section covers some of the most commonly encountered problems and tries its best to make them gone.</p>
 <blockquote>
@@ -90,3 +95,4 @@ $ sudo python $maasds --config=$cfg get $url
 latest
 $ sudo python $maasds --config=$cfg get $url/latest/meta-data/local-hostname
 maas-enlisting-node</code></pre>
+{% endblock %}

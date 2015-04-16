@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="juju-quick-start">Juju Quick Start</h1>
 <p>These instructions will help you deploy your first charm with Juju to a MAAS cluster.</p>
 <p>In the following, we assume that you have a MAAS cluster set-up with at least 2 nodes enlisted with it.</p>
@@ -63,3 +68,4 @@ $ juju add-relation wordpress mysql
 $ juju expose wordpress
 $ juju status</code></pre>
 <p>Note that each charm runs on its own host, so each deployment will actually take as long as it took to bootstrap. Have a beer, drown your sorrows in liquor, or, my preference, have another cup of tea.</p>
+{% endblock %}

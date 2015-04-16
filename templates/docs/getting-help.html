@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="getting-help">Getting help</h1>
 <h2 id="where-to-get-help">Where to get help</h2>
 <p>The two channels you can use to get help debugging a MAAS issue are:</p>
@@ -22,3 +27,4 @@ git clone https://github.com/sosreport/sosreport.git /tmp/sosreport
 sudo /tmp/sosreport/sosreport -o maas</code></pre>
 <p>This will create a tarball containing MAAS' log files, MAAS' configuration files and a dump of MAAS' database. By default, the tarball will end up in /tmp but you can change the location, see sosreport's manpage for details. If there are things you do not wish to share publicly, feel free to edit the tarball.</p>
 <p>Now, the last step is to make this file available by any means at your disposal (openly accessible FTP server, Dropbox, etc.) in order for the people who will help you to be able to get their hands on it.</p>
+{% endblock %}

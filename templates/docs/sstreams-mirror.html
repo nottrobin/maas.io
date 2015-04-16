@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="local-mirroring-of-boot-images">Local Mirroring of Boot Images</h1>
 <p>Boot images are delivered to MAAS via the simplestreams protocol. It is useful in some situations, such as testing, to mirror the images locally so that you don't need to repeatedly pull them down over a slower Internet link.</p>
 <p>First, install the required packages on the host where you wish to store the mirrored images:</p>
@@ -15,3 +20,4 @@
 <p>See bootsources for more detail.</p>
 <p>In the web UI, browse to the Settings tab as the admin user and scroll down to the &quot;Boot Images&quot; section. There you will find input boxes for the Sync URL and the keyring path, which should be set as the values in the API example above.</p>
 <p>The import is initiated by browsing to the Images tab and following the instructions on that page.</p>
+{% endblock %}

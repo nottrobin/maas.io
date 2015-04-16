@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="boot-images-import-configuration">Boot images import configuration</h1>
 <p>The configuration for where a region downloads its images is defined by a set of &quot;sources&quot;. Each &quot;source&quot; defines a Simplestreams repository location (<code>url</code>) from which images can be downloaded and a <code>keyring_filename</code> (or <code>keyring_data</code>) for validating index and image signatures from that location. For each source, you can define a series of filters (<code>selections</code>) specifying which images should be downloaded from that source.</p>
 <p>The following example use the MAAS CLI to list the boot sources and the boot source selections. Assuming the CLI <code>PROFILE</code> is the name of the profile under which you're logged in to the server:</p>
@@ -69,3 +74,4 @@ $ maas $PROFILE boot-source-selections read 1
 <p>Let's say you need to delete the newly added source.</p>
 <p>To delete the source:</p>
 <pre><code>$ maas $PROFILE boot-source delete 2</code></pre>
+{% endblock %}

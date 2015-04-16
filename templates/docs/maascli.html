@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="command-line-interface">Command Line Interface</h1>
 <p>As well as the web interface, many tasks can be performed by accessing the MAAS API directly through the maas command. This section details how to log in with this tool and perform some common operations.</p>
 <h2 id="logging-in">Logging in</h2>
@@ -200,9 +205,9 @@ the node (e.g. virsh, ipmi)</code></pre>
 </blockquote>
 <p>register uuid=&lt;value&gt; name=&lt;value&gt; interfaces=&lt;json_string&gt;</p>
 <blockquote>
-<p>Registers a new node group with the given name and uuid. The interfaces parameter must be supplied in the form of a JSON string comprising the key/value data for the interface to be used, for example: interface='[&quot;ip&quot;:&quot;192.168.21.5&quot;,&quot;interface&quot;:&quot;eth1&quot;, 
-&quot;subnet_mask&quot;:&quot;255.255.255.0&quot;,&quot;broadcast_ip&quot;:&quot;192.168.21.255&quot;, 
-&quot;router_ip&quot;:&quot;192.168.21.1&quot;, &quot;ip_range_low&quot;:&quot;192.168.21.10&quot;, 
+<p>Registers a new node group with the given name and uuid. The interfaces parameter must be supplied in the form of a JSON string comprising the key/value data for the interface to be used, for example: interface='[&quot;ip&quot;:&quot;192.168.21.5&quot;,&quot;interface&quot;:&quot;eth1&quot;,
+&quot;subnet_mask&quot;:&quot;255.255.255.0&quot;,&quot;broadcast_ip&quot;:&quot;192.168.21.255&quot;,
+&quot;router_ip&quot;:&quot;192.168.21.1&quot;, &quot;ip_range_low&quot;:&quot;192.168.21.10&quot;,
 &quot;ip_range_high&quot;:&quot;192.168.21.50&quot;}]'</p>
 </blockquote>
 <p>list</p>
@@ -378,3 +383,4 @@ static_ip_range_low=&lt;value&gt;
     definition=&#39;contains(//node[@id=&quot;display&quot;]/vendor, &quot;Intel&quot;)&#39;</code></pre>
 <h3 id="unused-commands">unused commands</h3>
 <p>Because the <code>maas</code> command exposes all of the API, it also lists some command options which are not really intended for end users, such as the &quot;file&quot; and &quot;boot-images&quot; options.</p>
+{% endblock %}

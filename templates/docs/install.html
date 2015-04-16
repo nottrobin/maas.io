@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="installing-maas">Installing MAAS</h1>
 <p>There are two main ways to install MAAS:</p>
 <blockquote>
@@ -112,3 +117,4 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+e+'<\/'+'a'+'>');
 <p>To alleviate this problem, you should enable <a href="https://www.symantec.com/business/support/index?page=content&amp;id=HOWTO6019">Portfast</a> for Cisco switches or its equivalent on other vendor equipment, which enables the ports to come up almost immediately.</p>
 <p>Once everything is set up and running, you are ready to start
 enlisting nodes &lt;nodes&gt;</p>
+{% endblock %}

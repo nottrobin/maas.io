@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="making-use-of-tags">Making use of Tags</h1>
 <p>MAAS implements a system of tags based on the physical properties of the nodes. The idea behind this is that you can use the tags to identify nodes with particular abilities which may be useful when it comes to deploying services.</p>
 <p>A real world example of this might be to identify nodes which have fast GPUs installed, if you were planning on deploying software which used CUDA or OpenCL which would make use of this hardware.</p>
@@ -39,3 +44,4 @@ $ maas mass tag update-nodes my_tag add=&lt;system_id&gt;</code></pre>
 <p><strong>tip</strong></p>
 <p>If you add and remove the same node in one operation, it ends up having the tag removed (even if the tag was in place before the operation).</p>
 </blockquote>
+{% endblock %}

@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="cluster-configuration">Cluster Configuration</h1>
 <p>Before any of MAAS's features can be used for the first time, you must have a cluster controller and configure it to manage at least one network of nodes. Each node in the cluster should be attached to one of these networks. (In addition, a node can be attached to any number of networks that are not managed by MAAS.)</p>
 <p>Managing a network normally means that MAAS will serve DHCP from the cluster controller. <strong>Do this only on a network that was set up with this in mind.</strong> Running your own DHCP server that competes with an existing one that's already managing the network can cause serious disruption, and it can be hard for administrators to track the source of the problem. Worse, the problems may not become immediately noticeable. Make sure you understand the implications of running a DHCP server before doing this. If MAAS detects any DHCP servers already running on these networks, it will show them on the cluster's configuration page.</p>
@@ -36,3 +41,4 @@
 <p>IP addresses in the static range are also available for reservation by users using the api. This prevents MAAS from allocating the reserved IP to any Nodes or other devices, which allows users to assign it freely to their own hosts/devices on the same network, such as LXC containers.</p>
 <h2 id="multiple-networks">Multiple networks</h2>
 <p>A single cluster controller can manage more than one network, each from a different cluster interface. This may help you scale your cluster to larger numbers of nodes, or it may be a requirement of your network architecture.</p>
+{% endblock %}

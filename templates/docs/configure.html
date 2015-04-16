@@ -1,3 +1,8 @@
+{% extends "base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="additional-configuration">Additional Configuration</h1>
 <h2 id="manual-dhcp-configuration">Manual DHCP configuration</h2>
 <p>DHCP is needed in order for MAAS to boot and control nodes. However, there are some circumstances under which you may not wish a cluster controller to handle DHCP address assignments for the network. In these instances, the existing DHCP server for the network will need its configuration altered to allow MAAS to enlist and control nodes automatically.</p>
@@ -120,3 +125,4 @@ d-i     clock-setup/ntp-server  string ntp.ubuntu.com</code></pre>
 <pre><code>nameserver &lt;IP OF MAAS DNS HOST&gt;</code></pre>
 <p>replacing the &lt;IP OF MAAS DNS HOST&gt; with the actual IP address of the host running the MAAS DNS server.</p>
 <p>However, for hosts using the <code>resolvconf</code> package, please read its documentation for more information.</p>
+{% endblock %}
