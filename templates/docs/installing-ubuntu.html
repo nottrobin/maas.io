@@ -21,14 +21,14 @@
 <p>The Debian Installer installs Ubuntu on a node in exactly the same way as you would install it manually: using the <a href="http://www.debian.org/devel/debian-installer/">Debian Installer</a>. Answers to the questions asked by the installer are provided in a 'preseed' file. For more information on preseed files, see the Additional
 Configuration &lt;preseed&gt; page.</p>
 <p>The Debian installer is not enabled by default. To enable it for a node that's been configured to use the fast installer, visit the node's page as an administrator and click the <code>Use the Debian installer</code> button.</p>
-<p><img src="media/node-page-use-default-installer.png" alt="image" /></p>
+<p><img src="../static/media/node-page-use-default-installer.png" alt="image" /></p>
 <p>To set multiple nodes to use the Debian installer, select the <code>Mark nodes as using the Debian installer</code> option from the bulk action menu on the <code>Nodes</code> page in the MAAS web UI.</p>
 <p>Because it installs Ubuntu from scratch, downloading packages as required, the Debian installer is slower than the fast installer
 &lt;fast-installer&gt;.</p>
 <h2 id="the-fast-installer">The fast installer</h2>
 <p>The fast installer is, as the name suggests, a means of installing Ubuntu on a node more quickly than would be possible using the Debian installer &lt;debian-installer&gt;.</p>
 <p>The fast installer is enabled by default for newly enlisted nodes.</p>
-<p><img src="media/node-page-use-fast-installer.png" alt="image" /></p>
+<p><img src="../static/media/node-page-use-fast-installer.png" alt="image" /></p>
 <p>To set multiple nodes to use the fast installer, select the <code>Mark nodes as using the fast installer</code> option from the bulk action menu on the <code>Nodes</code> page in the MAAS web UI.</p>
 <p>The fast installer copies a pre-built Ubuntu image to the node, with all the packages installed that would be normally found in an Ubuntu installation.</p>
 <p>The fast installer is much quicker than the Debian installer, but has the disadvantage that it's less easy to configure a node at install time, since the fast installer doesn't use a preseed file

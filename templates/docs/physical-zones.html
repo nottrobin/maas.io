@@ -28,7 +28,7 @@
 <p>If you are concerned about power density and cooling, you can lay out your physical zones to match server racks. Instead of allocating machines that share a physical zone, you can spread out the load by ensuring that &quot;hot&quot; systems are in located different zones.</p>
 <h2 id="creating-a-zone">Creating a Zone</h2>
 <p>Only administrators can create and manage zones. To create a physical zone in the web user interface, log in as an administrator and browse to the &quot;Zones&quot; section in the top bar. This will takes you to the zones listing page. At the bottom of the page is a button for creating a new zone:</p>
-<p><embed src="media/add-zone.*" /></p>
+<p><img src="../static/media/add-zone.png" /></p>
 <p>Or to do it in the region-controller API &lt;region-controller-api&gt;, POST your zone definition to the <em>&quot;zones&quot;</em> endpoint.</p>
 <h2 id="assigning-nodes-to-a-zone">Assigning Nodes to a Zone</h2>
 <p>Once you have created one or more physical zones, you can set nodes' zones from the nodes listing page in the UI. Select the nodes for which you wish to set a zone, and choose &quot;Set physical zone&quot; from the &quot;Bulk action&quot; dropdown list near the top. A second dropdown list will appear, to let you select which zone you wish to set. Leave it blank to clear nodes' physical zones. Clicking &quot;Go&quot; will apply the change to the selected nodes.</p>

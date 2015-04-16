@@ -14,7 +14,7 @@ documentation &lt;cluster-configuration&gt;.</p>
 <pre><code>$ maas maas nodes accept-all</code></pre>
 <h2 id="manually-add-nodes">Manually add nodes</h2>
 <p>If you know the MAC address of a node, you can manually enter details about the node through the web interface. Click the <code>Add Node</code> button to be taken to the &quot;Add Node&quot; form:</p>
-<p><img src="media/add-node.png" alt="image" /></p>
+<p><img src="../static/media/add-node.png" alt="image" /></p>
 <h2 id="virtual-machine-nodes">Virtual machine nodes</h2>
 <p>If you're setting up virtual machines to use as nodes with MAAS, you need to configure the power type as <code>virsh</code>. For MAAS to be able to use virsh, make sure you have the <code>libvirt-bin</code> package installed.</p>
 <p>The virsh power type takes two parameters:</p>
@@ -26,7 +26,7 @@ documentation &lt;cluster-configuration&gt;.</p>
 <dd><p>This is a libvirt connection string, such as <code>qemu+ssh://ubuntu@10.0.0.2/system</code> or <code>qemu:///system</code></p>
 </dd>
 </dl>
-<p><img src="media/virsh-config.png" alt="image" /></p>
+<p><img src="../static/media/virsh-config.png" alt="image" /></p>
 <p>If you want to use ssh you'll need to generate a ssh key pair for the maas user. By default there is no home directory created for the maas user:</p>
 <pre><code>$ sudo mkdir /home/maas
 $ sudo chown maas:maas /home/maas</code></pre>
