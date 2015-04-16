@@ -1,0 +1,11 @@
+<h1 id="dhcp-lease-scanning-and-dns">DHCP lease scanning and DNS</h1>
+<h2 id="overview">Overview</h2>
+<p>In a MAAS system, cluster controllers may optionally manage the DHCP, and the region controller may optionally manage the DNS.</p>
+<p>The region controller periodically tells the cluster controllers to report their DCHP leases. When a cluster controller reports new leases, the region controller creates DNS records for them, and instructs the cluster controller to convert the leases to static host mappings.</p>
+<h2 id="leases-scanning">Leases scanning</h2>
+<p>MAAS will periodically scan the DHCP leases file using the <code>LeaseUploadService()</code> pserv service.</p>
+<p>As leases are discovered, it calls the RPC function <code>UpdateLeases</code> which stores the active leases in the DHCPLease table.</p>
+<h2 id="updating-one-or-more-dns-zone-files">Updating one or more DNS zone files</h2>
+<p>If a new lease is found then the dns.dns_update_zones() function gets called which takes two steps:</p>
+<pre><code>#. Write out updated zone files.
+#. Ask BIND to reload the zone.</code></pre>

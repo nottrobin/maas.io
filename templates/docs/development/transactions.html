@@ -1,0 +1,29 @@
+<h1 id="transactions">Transactions</h1>
+<h2 id="how-we-rollback-in-maas">How we roll(back) in MAAS</h2>
+<p>MAAS runs almost all transactions using <a href="http://www.postgresql.org/docs/9.4/static/transaction-iso.html">serializable isolation</a>. This is very strict and PostgreSQL can and does reject transactions because of conflicts with other transactions; this are business-as-usual.</p>
+<p>MAAS is prepared for this, and will retry transactions that have failed because of these specific types of conflicts. MAAS has two tools to deal with serialisation failures:</p>
+<ul>
+<li>:py~maasserver.utils.views.WebApplicationHandler deals with failures in MAAS's Django application (the web UI and API). This is the shim between Twisted's web server and Django's WSGI application. It's not designed for any other purpose.</li>
+<li>:py~maasserver.utils.orm.transactional is used to decorate functions and methods such that they're run within transactions. This is general purpose, and can be used almost everywhere in the MAAS region controller.</li>
+</ul>
+<p>Slightly different strategies are employed in each, but they share a lot of their implementations.</p>
+<blockquote>
+<p><strong>note</strong></p>
+<p>Only MAAS's region — a.k.a. <code>regiond</code> — connects to the PostgreSQL database. MAAS's clusters — <code>clusterd</code> — are not directly relevant here.</p>
+</blockquote>
+<h2 id="always-prefer-transactional">Always prefer @transactional</h2>
+<p>MAAS's :py~maasserver.utils.orm.transactional decorator, in almost all situations, should be used to ensure that a piece of code runs within a transaction.</p>
+<p>It has very similar behaviour to Django's <code>transaction.atomic</code> — for good reason; it is based around it — so has savepoint-commit/rollback semantics when encountered within an existing transaction. In fact, when called from within a web or API request — i.e. within a transaction — it'll behave <em>exactly</em> like <code>transaction.atomic</code>.</p>
+<p>However, if it's ever called from outside of a transaction, via <code>deferToThread</code> for example, it'll also ensure that transactions are retried after serialisation failures, that post-commit hooks are run, and that connections are cleared up at the end.</p>
+<p>Even where we know that code cannot be reached from outside of a transaction, it's a good habit to always use <code>transactional</code> in preference to <code>transaction.atomic</code>. It's an easier rule to follow. Uses of <code>transaction.atomic</code> should also be exceptions and thus few in number, rendering them easy to audit.</p>
+<p>If you find that <code>transactional</code> doesn't Do The Right Thing for you, treat it first as a bug to be fixed before reaching for another tool.</p>
+<h2 id="except-that">Except that…</h2>
+<ul>
+<li><p><code>transactional</code> cannot be used as a context manager — and it can't be adapted into one, because of its retry behaviour — so:</p>
+<pre><code>with transaction.atomic():
+    do_stuff()</code></pre>
+<p>can be okay. <em>However</em>, this should typically be inside a function that is decorated with <code>transactional</code>, or in a private function that's only ever called from within a transaction that's being wrapped by <code>transactional</code>.</p>
+<p>In other words, you would only do this if you want to run a block of code with savepoint-commit/rollback behaviour, and a context manager is more convenient or appropriate than defining a new function decorated with <code>transactional</code>.</p></li>
+<li><p><code>transaction.atomic</code> is also okay as a context manager in <strong>tests</strong>, because you shouldn't run into serialisation failures there, and you may want more control over how post-commit hooks are handled anyway.</p>
+<p>Don't stress about this too much though: as long as your test inherits <code>PostCommitHooksTestMixin</code> <em>as most region tests already do</em> then your tests will fail if post-commit hooks are left dangling.</p></li>
+</ul>

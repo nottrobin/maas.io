@@ -1,0 +1,40 @@
+<h1 id="building-ubuntu-packages-of-maas">Building Ubuntu packages of MAAS</h1>
+<p>Using a virtual machine from a cloud provider seems to be easier and less hassle than using a local VM or LXC container, but the same recipe ought to apply.</p>
+<p>You need to build on the same OS that the package will be targeted to, so use a Precise instance to make packages for Precise, for example.</p>
+<ol>
+<li><p>Start up an instance, log in, and bring it up to date:</p>
+<pre><code>sudo apt-get update &amp;&amp; sudo apt-get upgrade</code></pre></li>
+<li><p>Get the appropriate packaging branch:</p>
+<pre><code>bzr branch lp:~maas-maintainers/maas/packaging{...}</code></pre>
+<p>The <a href="https://launchpad.net/~maas-maintainers">MAAS Maintainers</a> own all the <a href="https://code.launchpad.net/~maas-maintainers">official MAAS branches</a>.</p></li>
+<li>Move into the new branch directory.</li>
+<li><p>Check that all the build dependencies are installed. The dependencies are defined in <code>debian/control</code>:</p>
+<pre><code>fgrep -i build-depends -A 10 debian/control</code></pre>
+<p>This will yield, for example:</p>
+<pre><code>Build-Depends: debhelper (&gt;= 8.1.0~),
+               dh-apport,
+               po-debconf,
+               python (&gt;= 2.7),
+               python-distribute,
+               python-django
+Standards-Version: 3.9.3
+...</code></pre>
+<p>Install these dependencies:</p>
+<pre><code>sudo apt get install \
+    debhelper dh-apport po-debconf python \
+    python-distribute python-django</code></pre></li>
+<li>Edit <code>debian/changelog</code> so it contains:
+<ul>
+<li>the right upstream revision number in the version,</li>
+<li>the series you're building for; if <code>UNRELEASED</code> appears in the first entry, <code>s/UNRELEASED/trusty/</code> (or the series you want),</li>
+<li>the name and email address that correspond to the PGP key you want to use to sign the package; these appear near the end of the topmost entry.</li>
+</ul></li>
+<li><p>Build:</p>
+<pre><code>bzr bd -S -- -uc -us</code></pre>
+<p>The latter options tell it not to sign the files. You need to do this because the remote machine will not have your GPG key.</p></li>
+<li><p>Sign the build on your local machine:</p>
+<pre><code>debsign -r user@host &#39;~/*.changes&#39;</code></pre>
+<p>where <code>user@host</code> is an SSH string for accessing the remote instance. This will scp the changes and dsc locally, sign them, and put them back.</p></li>
+<li><p>On the remote instance you can optionally upload to a PPA:</p>
+<pre><code>dput -fu ppa:maas-maintainers/name-of-ppa *.changes</code></pre></li>
+</ol>

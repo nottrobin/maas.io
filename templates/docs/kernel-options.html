@@ -1,0 +1,18 @@
+<h1 id="setting-kernel-boot-options">Setting kernel boot options</h1>
+<p>MAAS is able to send specific kernel options to booting nodes on both a global basis and a per-node basis.</p>
+<h2 id="global-kernel-options">Global kernel options</h2>
+<p>As an admin, click on the gear icon at the top right and scroll down to the Global Kernel Parameters section, as shown here:</p>
+<p><img src="media/global_kernel_opts.png" alt="image" /></p>
+<p>Whatever you set here is sent as-is to all booting nodes.</p>
+<h2 id="per-node-kernel-options">Per-node kernel options</h2>
+<p>Per-node kernel options are set using tags. The easiest way of doing this is to use the <code>maas</code> command. You will need to be
+logged in to the API first &lt;api-key&gt; and then you can add a tag which has its <code>kernel_opts</code> value set, like this:</p>
+<pre><code>$ maas maas tags new name=&#39;nomodeset&#39; \
+  comment=&#39;nomodeset kernel option&#39; kernel_opts=&#39;nomodeset vga&#39;</code></pre>
+<p>Once the tag is defined, you can add it to a node or nodes:</p>
+<pre><code>$ maas maas tag update-nodes nomodeset add=&lt;system_id_1&gt; \
+  add=&lt;system_id_2&gt;</code></pre>
+<blockquote>
+<p><strong>note</strong></p>
+<p>Any per-node kernel options set will completely override the global options. If multiple tags attached to a node have the kernel_opts defined, the first one ordered by name is used.</p>
+</blockquote>
