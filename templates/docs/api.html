@@ -1,0 +1,1516 @@
+{% extends "docs/base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
+<div class="section" id="maas-api">
+<span id="region-controller-api"></span><h1>MAAS API<a class="headerlink" href="#maas-api" title="Permalink to this headline">¶</a></h1>
+<p>Restful MAAS API.</p>
+<p>This is the documentation for the API that lets you control and query MAAS.
+The API is &#8220;Restful&#8221;, which means that you access it through normal HTTP
+requests.</p>
+<div class="section" id="api-versions">
+<h2>API versions<a class="headerlink" href="#api-versions" title="Permalink to this headline">¶</a></h2>
+<p>At any given time, MAAS may support multiple versions of its API.  The version
+number is included in the API&#8217;s URL, e.g. /api/1.0/</p>
+<p>For now, 1.0 is the only supported version.</p>
+</div>
+<div class="section" id="http-methods-and-parameter-passing">
+<h2>HTTP methods and parameter-passing<a class="headerlink" href="#http-methods-and-parameter-passing" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>The following HTTP methods are available for accessing the API:</dt>
+<dd><ul class="first last simple">
+<li>GET (for information retrieval and queries),</li>
+<li>POST (for asking the system to do things),</li>
+<li>PUT (for updating objects), and</li>
+<li>DELETE (for deleting objects).</li>
+</ul>
+</dd>
+</dl>
+<p>All methods except DELETE may take parameters, but they are not all passed in
+the same way.  GET parameters are passed in the URL, as is normal with a GET:
+&#8220;/item/?foo=bar&#8221; passes parameter &#8220;foo&#8221; with value &#8220;bar&#8221;.</p>
+<p>POST and PUT are different.  Your request should have MIME type
+&#8220;multipart/form-data&#8221;; each part represents one parameter (for POST) or
+attribute (for PUT).  Each part is named after the parameter or attribute it
+contains, and its contents are the conveyed value.</p>
+<p>All parameters are in text form.  If you need to submit binary data to the
+API, don&#8217;t send it as any MIME binary format; instead, send it as a plain text
+part containing base64-encoded data.</p>
+<p>Most resources offer a choice of GET or POST operations.  In those cases these
+methods will take one special parameter, called <cite>op</cite>, to indicate what it is
+you want to do.</p>
+<p>For example, to list all nodes, you might GET &#8220;/api/1.0/nodes/?op=list&#8221;.</p>
+</div>
+<div class="section" id="operations">
+<h2>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="logged-in-user">
+<h3>Logged-in user<a class="headerlink" href="#logged-in-user" title="Permalink to this headline">¶</a></h3>
+<p>Manage the current logged-in user.</p>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/account/</span></tt> <tt class="docutils literal"><span class="pre">op=create_authorisation_token</span></tt></p>
+<blockquote>
+<div><p>Create an authorisation OAuth token and OAuth consumer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a json dict with three keys: &#8216;token_key&#8217;,
+&#8216;token_secret&#8217; and &#8216;consumer_key&#8217; (e.g.
+{token_key: &#8216;s65244576fgqs&#8217;, token_secret: &#8216;qsdfdhv34&#8217;,
+consumer_key: &#8216;68543fhj854fg&#8217;}).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">rtype:</th><td class="field-body">string (json)</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/account/</span></tt> <tt class="docutils literal"><span class="pre">op=delete_authorisation_token</span></tt></p>
+<blockquote>
+<div><p>Delete an authorisation OAuth token and the related OAuth consumer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param token_key:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">The key of the token to be deleted.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type token_key:</th><td class="field-body">unicode</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="boot-image">
+<h3>Boot image<a class="headerlink" href="#boot-image" title="Permalink to this headline">¶</a></h3>
+<p>Manage a boot image.</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/nodegroups/{uuid}/boot-images/{id}/</span></tt></dt>
+<dd>Read a boot image.</dd>
+</dl>
+</div>
+<div class="section" id="boot-images">
+<h3>Boot images<a class="headerlink" href="#boot-images" title="Permalink to this headline">¶</a></h3>
+<p>Manage the collection of boot images.</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/nodegroups/{uuid}/boot-images/</span></tt></dt>
+<dd><p class="first">List boot images.</p>
+<p>Get a listing of a cluster&#8217;s boot images.</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param uuid:</th><td class="field-body">The UUID of the cluster for which the images
+should be listed.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodegroups/{uuid}/boot-images/</span></tt> <tt class="docutils literal"><span class="pre">op=report_boot_images</span></tt></p>
+<blockquote>
+<div><p>Report images available to net-boot nodes from.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param uuid:</th><td class="field-body">The UUID of the cluster for which the images are
+being reported.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param images:</th><td class="field-body">A list of dicts, each describing a boot image with
+these properties: <cite>architecture</cite>, <cite>subarchitecture</cite>, <cite>release</cite>,
+<cite>purpose</cite>, and optionally, <cite>label</cite> (which defaults to &#8220;release&#8221;).
+These should match the code that determines TFTP paths for these
+images.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="commissioning-results">
+<h3>Commissioning results<a class="headerlink" href="#commissioning-results" title="Permalink to this headline">¶</a></h3>
+<p>Read the collection of NodeCommissionResult in the MAAS.</p>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/commissioning-results/</span></tt> <tt class="docutils literal"><span class="pre">op=list</span></tt></p>
+<blockquote>
+<div><p>List NodeCommissionResult visible to the user, optionally filtered.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param system_id:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">An optional list of system ids.  Only the
+commissioning results related to the nodes with these system ids
+will be returned.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type system_id:</th><td class="field-body">iterable</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param name:</th><td class="field-body">An optional list of names.  Only the commissioning
+results with the specified names will be returned.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type name:</th><td class="field-body">iterable</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="commissioning-script">
+<h3>Commissioning script<a class="headerlink" href="#commissioning-script" title="Permalink to this headline">¶</a></h3>
+<p>Manage a custom commissioning script.</p>
+<blockquote>
+<div>This functionality is only available to administrators.</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">/api/1.0/commissioning-scripts/{name}</span></tt></dt>
+<dd>Delete a commissioning script.</dd>
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/commissioning-scripts/{name}</span></tt></dt>
+<dd>Read a commissioning script.</dd>
+<dt><tt class="docutils literal"><span class="pre">PUT</span> <span class="pre">/api/1.0/commissioning-scripts/{name}</span></tt></dt>
+<dd>Update a commissioning script.</dd>
+</dl>
+</div>
+<div class="section" id="id1">
+<h3>Commissioning script<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Manage custom commissioning scripts.</p>
+<blockquote>
+<div>This functionality is only available to administrators.</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/commissioning-scripts/</span></tt></dt>
+<dd>List commissioning scripts.</dd>
+<dt><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/commissioning-scripts/</span></tt></dt>
+<dd><p class="first">Create a new commissioning script.</p>
+<p>Each commissioning script is identified by a unique name.</p>
+<p>By convention the name should consist of a two-digit number, a dash,
+and a brief descriptive identifier consisting only of ASCII
+characters.  You don&#8217;t need to follow this convention, but not doing
+so opens you up to risks w.r.t. encoding and ordering.  The name must
+not contain any whitespace, quotes, or apostrophes.</p>
+<p>A commissioning node will run each of the scripts in lexicographical
+order.  There are no promises about how non-ASCII characters are
+sorted, or even how upper-case letters are sorted relative to
+lower-case letters.  So where ordering matters, use unique numbers.</p>
+<p>Scripts built into MAAS will have names starting with &#8220;00-maas&#8221; or
+&#8220;99-maas&#8221; to ensure that they run first or last, respectively.</p>
+<p>Usually a commissioning script will be just that, a script.  Ideally a
+script should be ASCII text to avoid any confusion over encoding.  But
+in some cases a commissioning script might consist of a binary tool
+provided by a hardware vendor.  Either way, the script gets passed to
+the commissioning node in the exact form in which it was uploaded.</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param name:</th><td class="field-body">Unique identifying name for the script.  Names should
+follow the pattern of &#8220;25-burn-in-hard-disk&#8221; (all ASCII, and with
+numbers greater than zero, and generally no &#8220;weird&#8221; characters).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param content:</th><td class="field-body">A script file, to be uploaded in binary form.  Note:
+this is not a normal parameter, but a file upload.  Its filename
+is ignored; MAAS will know it by the name you pass to the request.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="section" id="file">
+<h3>File<a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h3>
+<p>Manage a FileStorage object.</p>
+<blockquote>
+<div>The file is identified by its filename and owner.</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">/api/1.0/files/{filename}/</span></tt></dt>
+<dd>Delete a FileStorage object.</dd>
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/files/{filename}/</span></tt></dt>
+<dd><p class="first">GET a FileStorage object as a json object.</p>
+<p class="last">The &#8216;content&#8217; of the file is base64-encoded.</p>
+</dd>
+</dl>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/files/{filename}/</span></tt> <tt class="docutils literal"><span class="pre">op=delete</span></tt></p>
+<blockquote>
+<div>Delete a FileStorage object.</div></blockquote>
+</div>
+<div class="section" id="files">
+<h3>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h3>
+<p>Manage the collection of all the files in this MAAS.</p>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/files/</span></tt> <tt class="docutils literal"><span class="pre">op=get</span></tt></p>
+<blockquote>
+<div><p>Get a named file from the file storage.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param filename:</th><td class="field-body">The exact name of the file you want to get.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type filename:</th><td class="field-body">string</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">The file is returned in the response content.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/files/</span></tt> <tt class="docutils literal"><span class="pre">op=get_by_key</span></tt></p>
+<blockquote>
+<div><p>Get a file from the file storage using its key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param key:</th><td class="field-body">The exact key of the file you want to get.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type key:</th><td class="field-body">string</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">The file is returned in the response content.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/files/</span></tt> <tt class="docutils literal"><span class="pre">op=list</span></tt></p>
+<blockquote>
+<div><p>List the files from the file storage.</p>
+<p>The returned files are ordered by file name and the content is
+excluded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param prefix:</th><td class="field-body">Optional prefix used to filter out the returned files.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type prefix:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/files/</span></tt> <tt class="docutils literal"><span class="pre">op=add</span></tt></p>
+<blockquote>
+<div><p>Add a new file to the file storage.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param filename:</th><td class="field-body">The file name to use in the storage.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type filename:</th><td class="field-body">string</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param file:</th><td class="field-body">Actual file data with content type
+application/octet-stream</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="maas-server">
+<h3>MAAS server<a class="headerlink" href="#maas-server" title="Permalink to this headline">¶</a></h3>
+<p>Manage the MAAS server.</p>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/maas/</span></tt> <tt class="docutils literal"><span class="pre">op=get_config</span></tt></p>
+<blockquote>
+<div><p>Get a config value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param name:</th><td class="field-body">The name of the config item to be retrieved.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type name:</th><td class="field-body">unicode</td>
+</tr>
+</tbody>
+</table>
+<p>Available configuration items:</p>
+<ul class="simple">
+<li>commissioning_distro_series: Default distro series used for commissioning.         Available choices are: &#8216;trusty&#8217; (Ubuntu 14.04 LTS &#8220;Trusty Tahr&#8221;).</li>
+<li>check_compatibility: Check component compatibility and certification.</li>
+<li>http_proxy: Proxy for HTTP and HTTPS traffic.         This is used by the cluster and region controllers for downloading PXE boot images and other provisioning-related resources. This will also be passed onto provisioned nodes instead of the default proxy (the region controller proxy).</li>
+<li>default_distro_series: Default distro series used for deployment.         Available choices are: &#8216;&#8217; (Default Ubuntu Release), &#8216;precise&#8217; (Ubuntu 12.04 LTS &#8220;Precise Pangolin&#8221;), &#8216;quantal&#8217; (Ubuntu 12.10 &#8220;Quantal Quetzal&#8221;), &#8216;raring&#8217; (Ubuntu 13.04 &#8220;Raring Ringtail&#8221;), &#8216;saucy&#8217; (Ubuntu 13.10 &#8220;Saucy Salamander&#8221;), &#8216;trusty&#8217; (Ubuntu 14.04 LTS &#8220;Trusty Tahr&#8221;).</li>
+<li>ntp_server: Address of NTP server for nodes.         NTP server address passed to nodes via a DHCP response. e.g. for ntp.ubuntu.com: &#8216;91.189.94.4&#8217;</li>
+<li>enlistment_domain: Default domain for new nodes.         If &#8216;local&#8217; is chosen, nodes must be using mDNS. Leave empty to use hostnames without a domain for newly enlisted nodes.</li>
+<li>upstream_dns: Upstream DNS used to resolve domains not managed by this MAAS.         Only used when MAAS is running its own DNS server. This value is used as the value of &#8216;forwarders&#8217; in the DNS server config.</li>
+<li>enable_third_party_drivers: Enable the installation of proprietary drivers (i.e. HPVSA).</li>
+<li>kernel_opts: Boot parameters to pass to the kernel by default.</li>
+<li>main_archive: Main archive.         Archive used by nodes to retrieve packages for Intel architectures. E.g. <a class="reference external" href="http://archive.ubuntu.com/ubuntu">http://archive.ubuntu.com/ubuntu</a>.</li>
+<li>maas_name: MAAS name.</li>
+<li>ports_archive: Ports archive.         Archive used by nodes to retrieve packages for non-Intel architectures. E.g. <a class="reference external" href="http://ports.ubuntu.com/ubuntu-ports">http://ports.ubuntu.com/ubuntu-ports</a>.</li>
+</ul>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/maas/</span></tt> <tt class="docutils literal"><span class="pre">op=set_config</span></tt></p>
+<blockquote>
+<div><p>Set a config value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param name:</th><td class="field-body">The name of the config item to be set.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type name:</th><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param value:</th><td class="field-body">The value of the config item to be set.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type value:</th><td class="field-body">json object</td>
+</tr>
+</tbody>
+</table>
+<p>Available configuration items:</p>
+<ul class="simple">
+<li>commissioning_distro_series: Default distro series used for commissioning.         Available choices are: &#8216;trusty&#8217; (Ubuntu 14.04 LTS &#8220;Trusty Tahr&#8221;).</li>
+<li>check_compatibility: Check component compatibility and certification.</li>
+<li>http_proxy: Proxy for HTTP and HTTPS traffic.         This is used by the cluster and region controllers for downloading PXE boot images and other provisioning-related resources. This will also be passed onto provisioned nodes instead of the default proxy (the region controller proxy).</li>
+<li>default_distro_series: Default distro series used for deployment.         Available choices are: &#8216;&#8217; (Default Ubuntu Release), &#8216;precise&#8217; (Ubuntu 12.04 LTS &#8220;Precise Pangolin&#8221;), &#8216;quantal&#8217; (Ubuntu 12.10 &#8220;Quantal Quetzal&#8221;), &#8216;raring&#8217; (Ubuntu 13.04 &#8220;Raring Ringtail&#8221;), &#8216;saucy&#8217; (Ubuntu 13.10 &#8220;Saucy Salamander&#8221;), &#8216;trusty&#8217; (Ubuntu 14.04 LTS &#8220;Trusty Tahr&#8221;).</li>
+<li>ntp_server: Address of NTP server for nodes.         NTP server address passed to nodes via a DHCP response. e.g. for ntp.ubuntu.com: &#8216;91.189.94.4&#8217;</li>
+<li>enlistment_domain: Default domain for new nodes.         If &#8216;local&#8217; is chosen, nodes must be using mDNS. Leave empty to use hostnames without a domain for newly enlisted nodes.</li>
+<li>upstream_dns: Upstream DNS used to resolve domains not managed by this MAAS.         Only used when MAAS is running its own DNS server. This value is used as the value of &#8216;forwarders&#8217; in the DNS server config.</li>
+<li>enable_third_party_drivers: Enable the installation of proprietary drivers (i.e. HPVSA).</li>
+<li>kernel_opts: Boot parameters to pass to the kernel by default.</li>
+<li>main_archive: Main archive.         Archive used by nodes to retrieve packages for Intel architectures. E.g. <a class="reference external" href="http://archive.ubuntu.com/ubuntu">http://archive.ubuntu.com/ubuntu</a>.</li>
+<li>maas_name: MAAS name.</li>
+<li>ports_archive: Ports archive.         Archive used by nodes to retrieve packages for non-Intel architectures. E.g. <a class="reference external" href="http://ports.ubuntu.com/ubuntu-ports">http://ports.ubuntu.com/ubuntu-ports</a>.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="network">
+<h3>Network<a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h3>
+<p>Manage a network.</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">/api/1.0/networks/{name}/</span></tt></dt>
+<dd><p class="first">Delete network definition.</p>
+<p class="last">A network cannot be deleted while it still has nodes attached to it.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/networks/{name}/</span></tt></dt>
+<dd>Read network definition.</dd>
+</dl>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/networks/{name}/</span></tt> <tt class="docutils literal"><span class="pre">op=list_connected_macs</span></tt></p>
+<blockquote>
+<div><p>Returns the list of MAC addresses connected to this network.</p>
+<p>Only MAC addresses for nodes visible to the requesting user are
+returned.</p>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/networks/{name}/</span></tt> <tt class="docutils literal"><span class="pre">op=connect_macs</span></tt></p>
+<blockquote>
+<div><p>Connect the given MAC addresses to this network.</p>
+<p>These MAC addresses must belong to nodes in the MAAS, and have been
+registered as such in MAAS.</p>
+<p>Connecting a network interface to a network which it is already
+connected to does nothing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param macs:</th><td class="field-body">A list of node MAC addresses, in text form.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/networks/{name}/</span></tt> <tt class="docutils literal"><span class="pre">op=disconnect_macs</span></tt></p>
+<blockquote>
+<div><p>Disconnect the given MAC addresses from this network.</p>
+<p>Removing a MAC address from a network which it is not connected to
+does nothing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param macs:</th><td class="field-body">A list of node MAC addresses, in text form.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">PUT</span> <span class="pre">/api/1.0/networks/{name}/</span></tt></dt>
+<dd><p class="first">Update network definition.</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param name:</th><td class="field-body">A simple name for the network, to make it easier to
+refer to.  Must consist only of letters, digits, dashes, and
+underscores.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param ip:</th><td class="field-body">Base IP address for the network, e.g. <cite>10.1.0.0</cite>.  The host
+bits will be zeroed.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param netmask:</th><td class="field-body">Subnet mask to indicate which parts of an IP address
+are part of the network address.  For example, <cite>255.255.255.0</cite>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param vlan_tag:</th><td class="field-body">Optional VLAN tag: a number between 1 and 0xffe (4094)
+inclusive, or zero for an untagged network.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param description:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Detailed description of the network for the benefit
+of users and administrators.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="section" id="networks">
+<h3>Networks<a class="headerlink" href="#networks" title="Permalink to this headline">¶</a></h3>
+<p>Manage the networks.</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/networks/</span></tt></dt>
+<dd><p class="first">List networks.</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param node:</th><td class="field-body">Optionally, nodes which must be attached to any returned
+networks.  If more than one node is given, the result will be
+restricted to networks that these nodes have in common.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/networks/</span></tt></dt>
+<dd><p class="first">Define a network.</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param name:</th><td class="field-body">A simple name for the network, to make it easier to
+refer to.  Must consist only of letters, digits, dashes, and
+underscores.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param ip:</th><td class="field-body">Base IP address for the network, e.g. <cite>10.1.0.0</cite>.  The host
+bits will be zeroed.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param netmask:</th><td class="field-body">Subnet mask to indicate which parts of an IP address
+are part of the network address.  For example, <cite>255.255.255.0</cite>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param vlan_tag:</th><td class="field-body">Optional VLAN tag: a number between 1 and 0xffe (4094)
+inclusive, or zero for an untagged network.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param description:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Detailed description of the network for the benefit
+of users and administrators.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="section" id="nodegroup">
+<h3>Nodegroup<a class="headerlink" href="#nodegroup" title="Permalink to this headline">¶</a></h3>
+<p>Manage a NodeGroup.</p>
+<blockquote>
+<div><p>NodeGroup is the internal name for a cluster.</p>
+<p>The NodeGroup is identified by its UUID, a random identifier that looks
+something like:</p>
+<blockquote>
+<div>5977f6ab-9160-4352-b4db-d71a99066c4f</div></blockquote>
+<p>Each NodeGroup has its own uuid.</p>
+</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/nodegroups/{uuid}/</span></tt></dt>
+<dd>GET a node group.</dd>
+</dl>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/nodegroups/{uuid}/</span></tt> <tt class="docutils literal"><span class="pre">op=list_nodes</span></tt></p>
+<blockquote>
+<div>Get the list of node ids that are part of this group.</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodegroups/{uuid}/</span></tt> <tt class="docutils literal"><span class="pre">op=details</span></tt></p>
+<blockquote>
+<div><p>Obtain various system details for each node specified.</p>
+<p>For example, LLDP and <tt class="docutils literal"><span class="pre">lshw</span></tt> XML dumps.</p>
+<p>Returns a <tt class="docutils literal"><span class="pre">{system_id:</span> <span class="pre">{detail_type:</span> <span class="pre">xml,</span> <span class="pre">...},</span> <span class="pre">...}</span></tt> map,
+where <tt class="docutils literal"><span class="pre">detail_type</span></tt> is something like &#8220;lldp&#8221; or &#8220;lshw&#8221;.</p>
+<p>Note that this is returned as BSON and not JSON. This is for
+efficiency, but mainly because JSON can&#8217;t do binary content
+without applying additional encoding like base-64.</p>
+<p>For security purposes:</p>
+<ol class="loweralpha simple">
+<li>Requests are only fulfilled for the worker assigned to the
+nodegroup.</li>
+<li>Requests for nodes that are not part of the nodegroup are
+just ignored.</li>
+</ol>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodegroups/{uuid}/</span></tt> <tt class="docutils literal"><span class="pre">op=import_boot_images</span></tt></p>
+<blockquote>
+<div>Import the pxe files on this cluster controller.</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodegroups/{uuid}/</span></tt> <tt class="docutils literal"><span class="pre">op=probe_and_enlist_hardware</span></tt></p>
+<blockquote>
+<div><p>Add special hardware types.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param model:</th><td class="field-body">The type of special hardware, &#8216;seamicro15k&#8217; and
+&#8216;virsh&#8217; is supported.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type model:</th><td class="field-body">unicode</td>
+</tr>
+</tbody>
+</table>
+<p>The following are only required if you are probing a seamicro15k:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param mac:</th><td class="field-body">The MAC of the seamicro15k chassis.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type mac:</th><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param username:</th><td class="field-body">The username for the chassis.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type username:</th><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param password:</th><td class="field-body">The password for the chassis.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type password:</th><td class="field-body">unicode</td>
+</tr>
+</tbody>
+</table>
+<p>The following are optional if you are probing a seamicro15k:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param power_control:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">The power_control to use, either ipmi (default)
+or restapi.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type power_control:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode</td>
+</tr>
+</tbody>
+</table>
+<p>The following are only required if you are probing a virsh:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param power_address:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">The connection string to virsh.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type power_address:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode</td>
+</tr>
+</tbody>
+</table>
+<p>The following are optional if you are probing a virsh:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param power_pass:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">The password to use, when qemu+ssh is given as a
+connection string and ssh key authentication is not being used.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type power_pass:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodegroups/{uuid}/</span></tt> <tt class="docutils literal"><span class="pre">op=probe_and_enlist_ucsm</span></tt></p>
+<blockquote>
+<div><p>Add the nodes from a Cisco UCS Manager.</p>
+<p>:param : The URL of the UCS Manager API.
+:type url: unicode
+:param username: The username for the API.
+:type username: unicode
+:param password: The password for the API.
+:type password: unicode</p>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodegroups/{uuid}/</span></tt> <tt class="docutils literal"><span class="pre">op=report_download_progress</span></tt></p>
+<blockquote>
+<div><p>Report progress of a download.</p>
+<p>Cluster controllers can call this to update the region controller on
+file downloads they need to perform, such as kernels and initrd files.
+This gives the administrator insight into what downloads are in
+progress, how well downloads are going, and what failures may have
+occurred.</p>
+<p>A file is identified by an arbitrary name, which must be consistent.
+It could be a URL, or a filesystem path, or even a symbolic name that
+the cluster controller makes up.  A cluster controller can download
+the same file many times over, but not simultaneously.</p>
+<p>Before downloading a file, a cluster controller first reports progress
+without the <cite>bytes_downloaded</cite> parameter.  It may optionally report
+progress while downloading, passing the number of bytes downloaded
+so far.  Finally, if the download succeeded, it should report one final
+time with the full number of bytes downloaded.</p>
+<p>If the download fails, the cluster controller should report progress
+with an error string (and either the number of bytes that were
+successfully downloaded, or zero).</p>
+<p>Progress reports should include the file&#8217;s size, if known.  The final
+report after a successful download must include the size.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param filename:</th><td class="field-body">Arbitrary identifier for the file being downloaded.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type filename:</th><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param size:</th><td class="field-body">Optional size of the file, in bytes.  Must be passed at
+least once, though it can still be passed on subsequent calls.  If
+file size is not known, pass it at the end when reporting
+successful completion.  Do not change the size once given.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param bytes_downloaded:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Number of bytes that have been successfully
+downloaded.  Cannot exceed <cite>size</cite>, if known.  This parameter must
+be omitted from the initial progress report before download starts,
+and must be included for all subsequent progress reports for that
+download.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">type bytes_downloaded:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param error:</th><td class="field-body">Optional error string.  A download that has submitted an
+error with its last progress report is considered to have failed.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">type error:</th><td class="field-body">unicode</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodegroups/{uuid}/</span></tt> <tt class="docutils literal"><span class="pre">op=update_leases</span></tt></p>
+<blockquote>
+<div><p>Submit latest state of DHCP leases within the cluster.</p>
+<p>The cluster controller calls this periodically to tell the region
+controller about the IP addresses it manages.</p>
+</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">PUT</span> <span class="pre">/api/1.0/nodegroups/{uuid}/</span></tt></dt>
+<dd><p class="first">Update a specific cluster.</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param name:</th><td class="field-body">The new DNS name for this cluster.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type name:</th><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param cluster_name:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">The new name for this cluster.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type cluster_name:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param status:</th><td class="field-body">The new status for this cluster (see
+vocabulary <cite>NODEGROUP_STATUS</cite>).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type status:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="section" id="nodegroup-interface">
+<h3>Nodegroup interface<a class="headerlink" href="#nodegroup-interface" title="Permalink to this headline">¶</a></h3>
+<p>Manage a NodeGroupInterface.</p>
+<blockquote>
+<div>A NodeGroupInterface is identified by the uuid for its NodeGroup, and
+the name of the network interface it represents: &#8220;eth0&#8221; for example.</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">/api/1.0/nodegroups/{uuid}/interfaces/{interface}/</span></tt></dt>
+<dd>Delete a specific NodeGroupInterface.</dd>
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/nodegroups/{uuid}/interfaces/{interface}/</span></tt></dt>
+<dd>List of NodeGroupInterfaces of a NodeGroup.</dd>
+</dl>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodegroups/{uuid}/interfaces/{interface}/</span></tt> <tt class="docutils literal"><span class="pre">op=report_foreign_dhcp</span></tt></p>
+<blockquote>
+<div><p>Report the result of a probe for foreign DHCP servers.</p>
+<p>Cluster controllers probe for DHCP servers not managed by MAAS, and
+call this method to report their findings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param foreign_dhcp_ip:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">New value for the foreign DHCP server found
+during the last probe.  Leave blank if none were found.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">PUT</span> <span class="pre">/api/1.0/nodegroups/{uuid}/interfaces/{interface}/</span></tt></dt>
+<dd><p class="first">Update a specific NodeGroupInterface.</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param ip:</th><td class="field-body">Static IP of the interface.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type ip:</th><td class="field-body">unicode (IP Address)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param interface:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Name of the interface.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type interface:</th><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param management:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">The service(s) MAAS should manage on this interface.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type management:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Vocabulary <cite>NODEGROUPINTERFACE_MANAGEMENT</cite></td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param subnet_mask:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Subnet mask, e.g. 255.0.0.0.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type subnet_mask:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode (IP Address)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param broadcast_ip:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Broadcast address for this subnet.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type broadcast_ip:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode (IP Address)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param router_ip:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Address of default gateway.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type router_ip:</th><td class="field-body">unicode (IP Address)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param ip_range_low:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Lowest IP address to assign to clients.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type ip_range_low:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode (IP Address)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param ip_range_high:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Highest IP address to assign to clients.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type ip_range_high:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode (IP Address)</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="section" id="nodegroup-interfaces">
+<h3>Nodegroup interfaces<a class="headerlink" href="#nodegroup-interfaces" title="Permalink to this headline">¶</a></h3>
+<p>Manage the collection of all the NodeGroupInterfaces in this MAAS.</p>
+<blockquote>
+<div>A NodeGroupInterface is a network interface attached to a cluster
+controller, with its network properties.</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/nodegroups/{uuid}/interfaces/</span></tt> <tt class="docutils literal"><span class="pre">op=list</span></tt></p>
+<blockquote>
+<div>List of NodeGroupInterfaces of a NodeGroup.</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodegroups/{uuid}/interfaces/</span></tt> <tt class="docutils literal"><span class="pre">op=new</span></tt></p>
+<blockquote>
+<div><p>Create a new NodeGroupInterface for this NodeGroup.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param ip:</th><td class="field-body">Static IP of the interface.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type ip:</th><td class="field-body">unicode (IP Address)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param interface:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Name of the interface.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type interface:</th><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param management:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">The service(s) MAAS should manage on this interface.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type management:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Vocabulary <cite>NODEGROUPINTERFACE_MANAGEMENT</cite></td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param subnet_mask:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Subnet mask, e.g. 255.0.0.0.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type subnet_mask:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode (IP Address)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param broadcast_ip:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Broadcast address for this subnet.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type broadcast_ip:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode (IP Address)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param router_ip:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Address of default gateway.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type router_ip:</th><td class="field-body">unicode (IP Address)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param ip_range_low:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Lowest IP address to assign to clients.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type ip_range_low:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode (IP Address)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param ip_range_high:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Highest IP address to assign to clients.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type ip_range_high:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode (IP Address)</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="nodegroups">
+<h3>Nodegroups<a class="headerlink" href="#nodegroups" title="Permalink to this headline">¶</a></h3>
+<p>Manage the collection of all the nodegroups in this MAAS.</p>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/nodegroups/</span></tt> <tt class="docutils literal"><span class="pre">op=describe_power_types</span></tt></p>
+<blockquote>
+<div><p>Query all the cluster controllers for power information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a list of dicts that describe the power types in this format.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/nodegroups/</span></tt> <tt class="docutils literal"><span class="pre">op=list</span></tt></p>
+<blockquote>
+<div>List nodegroups.</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodegroups/</span></tt> <tt class="docutils literal"><span class="pre">op=accept</span></tt></p>
+<blockquote>
+<div><p>Accept nodegroup enlistment(s).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param uuid:</th><td class="field-body">The UUID (or list of UUIDs) of the nodegroup(s) to accept.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type name:</th><td class="field-body">unicode (or list of unicodes)</td>
+</tr>
+</tbody>
+</table>
+<p>This method is reserved to admin users.</p>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodegroups/</span></tt> <tt class="docutils literal"><span class="pre">op=import_boot_images</span></tt></p>
+<blockquote>
+<div>Import the boot images on all the accepted cluster controllers.</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodegroups/</span></tt> <tt class="docutils literal"><span class="pre">op=reject</span></tt></p>
+<blockquote>
+<div><p>Reject nodegroup enlistment(s).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param uuid:</th><td class="field-body">The UUID (or list of UUIDs) of the nodegroup(s) to reject.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type name:</th><td class="field-body">unicode (or list of unicodes)</td>
+</tr>
+</tbody>
+</table>
+<p>This method is reserved to admin users.</p>
+</div></blockquote>
+</div>
+<div class="section" id="node">
+<h3>Node<a class="headerlink" href="#node" title="Permalink to this headline">¶</a></h3>
+<p>Manage an individual Node.</p>
+<blockquote>
+<div>The Node is identified by its system_id.</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">/api/1.0/nodes/{system_id}/</span></tt></dt>
+<dd>Delete a specific Node.</dd>
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/nodes/{system_id}/</span></tt></dt>
+<dd>Read a specific Node.</dd>
+</dl>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/nodes/{system_id}/</span></tt> <tt class="docutils literal"><span class="pre">op=details</span></tt></p>
+<blockquote>
+<div><p>Obtain various system details.</p>
+<p>For example, LLDP and <tt class="docutils literal"><span class="pre">lshw</span></tt> XML dumps.</p>
+<p>Returns a <tt class="docutils literal"><span class="pre">{detail_type:</span> <span class="pre">xml,</span> <span class="pre">...}</span></tt> map, where
+<tt class="docutils literal"><span class="pre">detail_type</span></tt> is something like &#8220;lldp&#8221; or &#8220;lshw&#8221;.</p>
+<p>Note that this is returned as BSON and not JSON. This is for
+efficiency, but mainly because JSON can&#8217;t do binary content
+without applying additional encoding like base-64.</p>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodes/{system_id}/</span></tt> <tt class="docutils literal"><span class="pre">op=commission</span></tt></p>
+<blockquote>
+<div><p>Begin commissioning process for a node.</p>
+<p>A node in the &#8216;ready&#8217;, &#8216;declared&#8217; or &#8216;failed test&#8217; state may
+initiate a commissioning cycle where it is checked out and tested
+in preparation for transitioning to the &#8216;ready&#8217; state. If it is
+already in the &#8216;ready&#8217; state this is considered a re-commissioning
+process which is useful if commissioning tests were changed after
+it previously commissioned.</p>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodes/{system_id}/</span></tt> <tt class="docutils literal"><span class="pre">op=release</span></tt></p>
+<blockquote>
+<div>Release a node.  Opposite of <cite>NodesHandler.acquire</cite>.</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodes/{system_id}/</span></tt> <tt class="docutils literal"><span class="pre">op=start</span></tt></p>
+<blockquote>
+<div><p>Power up a node.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param user_data:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">If present, this blob of user-data to be made
+available to the nodes through the metadata service.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type user_data:</th><td class="field-body">base64-encoded unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param distro_series:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">If present, this parameter specifies the
+Ubuntu Release the node will use.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type distro_series:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode</td>
+</tr>
+</tbody>
+</table>
+<p>Ideally we&#8217;d have MIME multipart and content-transfer-encoding etc.
+deal with the encapsulation of binary data, but couldn&#8217;t make it work
+with the framework in reasonable time so went for a dumb, manual
+encoding instead.</p>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodes/{system_id}/</span></tt> <tt class="docutils literal"><span class="pre">op=stop</span></tt></p>
+<blockquote>
+<div>Shut down a node.</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">PUT</span> <span class="pre">/api/1.0/nodes/{system_id}/</span></tt></dt>
+<dd><p class="first">Update a specific Node.</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param hostname:</th><td class="field-body">The new hostname for this node.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type hostname:</th><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param architecture:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">The new architecture for this node.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type architecture:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param power_type:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">The new power type for this node. If you use the
+default value, power_parameters will be set to the empty string.
+Available to admin users.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type power_type:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param power_parameters_{param1}:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">The new value for the &#8216;param1&#8217;
+power parameter.  Note that this is dynamic as the available
+parameters depend on the selected value of the Node&#8217;s power_type.
+For instance, if the power_type is &#8216;ether_wake&#8217;, the only valid
+parameter is &#8216;power_address&#8217; so one would want to pass &#8216;myaddress&#8217;
+as the value of the &#8216;power_parameters_power_address&#8217; parameter.
+Available to admin users.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type power_parameters_{param1}:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param power_parameters_skip_check:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Whether or not the new power
+parameters for this node should be checked against the expected
+power parameters for the node&#8217;s power type (&#8216;true&#8217; or &#8216;false&#8217;).
+The default is &#8216;false&#8217;.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type power_parameters_skip_check:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param zone:</th><td class="field-body">Name of a valid physical zone in which to place this node</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type zone:</th><td class="field-body">unicode</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="section" id="node-mac-address">
+<h3>Node MAC address<a class="headerlink" href="#node-mac-address" title="Permalink to this headline">¶</a></h3>
+<p>Manage a Node MAC address.</p>
+<blockquote>
+<div>The MAC address object is identified by the system_id for the Node it
+is attached to, plus the MAC address itself.</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">/api/1.0/nodes/{system_id}/macs/{mac_address}/</span></tt></dt>
+<dd>Delete a specific MAC address for the specified Node.</dd>
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/nodes/{system_id}/macs/{mac_address}/</span></tt></dt>
+<dd>Read a MAC address related to a Node.</dd>
+</dl>
+</div>
+<div class="section" id="node-mac-addresses">
+<h3>Node MAC addresses<a class="headerlink" href="#node-mac-addresses" title="Permalink to this headline">¶</a></h3>
+<p>Manage MAC addresses for a given Node.</p>
+<blockquote>
+<div><p>This is where you manage the MAC addresses linked to a Node, including
+associating a new MAC address with the Node.</p>
+<p>The Node is identified by its system_id.</p>
+</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/nodes/{system_id}/macs/</span></tt></dt>
+<dd>Read all MAC addresses related to a Node.</dd>
+<dt><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodes/{system_id}/macs/</span></tt></dt>
+<dd>Create a MAC address for a specified Node.</dd>
+</dl>
+</div>
+<div class="section" id="nodes">
+<h3>Nodes<a class="headerlink" href="#nodes" title="Permalink to this headline">¶</a></h3>
+<p>Manage the collection of all the nodes in the MAAS.</p>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/nodes/</span></tt> <tt class="docutils literal"><span class="pre">op=list</span></tt></p>
+<blockquote>
+<div><p>List Nodes visible to the user, optionally filtered by criteria.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param hostname:</th><td class="field-body">An optional list of hostnames.  Only nodes with
+matching hostnames will be returned.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type hostname:</th><td class="field-body">iterable</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param mac_address:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">An optional list of MAC addresses.  Only
+nodes with matching MAC addresses will be returned.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type mac_address:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">iterable</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param id:</th><td class="field-body">An optional list of system ids.  Only nodes with
+matching system ids will be returned.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type id:</th><td class="field-body">iterable</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param zone:</th><td class="field-body">An optional name for a physical zone. Only nodes in the
+zone will be returned.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type zone:</th><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param agent_name:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">An optional agent name.  Only nodes with
+matching agent names will be returned.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type agent_name:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/nodes/</span></tt> <tt class="docutils literal"><span class="pre">op=list_allocated</span></tt></p>
+<blockquote>
+<div>Fetch Nodes that were allocated to the User/oauth token.</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodes/</span></tt> <tt class="docutils literal"><span class="pre">op=accept</span></tt></p>
+<blockquote>
+<div><p>Accept declared nodes into the MAAS.</p>
+<p>Nodes can be enlisted in the MAAS anonymously or by non-admin users,
+as opposed to by an admin.  These nodes are held in the Declared
+state; a MAAS admin must first verify the authenticity of these
+enlistments, and accept them.</p>
+<p>Enlistments can be accepted en masse, by passing multiple nodes to
+this call.  Accepting an already accepted node is not an error, but
+accepting one that is already allocated, broken, etc. is.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param nodes:</th><td class="field-body">system_ids of the nodes whose enlistment is to be
+accepted.  (An empty list is acceptable).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">The system_ids of any nodes that have their status changed
+by this call.  Thus, nodes that were already accepted are
+excluded from the result.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodes/</span></tt> <tt class="docutils literal"><span class="pre">op=accept_all</span></tt></p>
+<blockquote>
+<div><p>Accept all declared nodes into the MAAS.</p>
+<p>Nodes can be enlisted in the MAAS anonymously or by non-admin users,
+as opposed to by an admin.  These nodes are held in the Declared
+state; a MAAS admin must first verify the authenticity of these
+enlistments, and accept them.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">Representations of any nodes that have their status changed
+by this call.  Thus, nodes that were already accepted are excluded
+from the result.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodes/</span></tt> <tt class="docutils literal"><span class="pre">op=acquire</span></tt></p>
+<blockquote>
+<div><p>Acquire an available node for deployment.</p>
+<p>Constraints parameters can be used to acquire a node that possesses
+certain characteristics.  All the constraints are optional and when
+multiple constraints are provided, they are combined using &#8216;AND&#8217;
+semantics.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param name:</th><td class="field-body">Hostname of the returned node.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type name:</th><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param arch:</th><td class="field-body">Architecture of the returned node (e.g. &#8216;i386/generic&#8217;,
+&#8216;amd64&#8217;, &#8216;armhf/highbank&#8217;, etc.).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type arch:</th><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param cpu_count:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">The minium number of CPUs the returned node must
+have.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type cpu_count:</th><td class="field-body">int</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param mem:</th><td class="field-body">The minimum amount of memory (expressed in MB) the
+returned node must have.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type mem:</th><td class="field-body">float</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param tags:</th><td class="field-body">List of tags the returned node must have.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type tags:</th><td class="field-body">list of unicodes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param connected_to:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">List of routers&#8217; MAC addresses the returned
+node must be connected to.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type connected_to:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode or list of unicodes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param networks:</th><td class="field-body">List of networks (defined in MAAS) to which the node
+must be attached.  A network can be identified by the name
+assigned to it in MAAS; or by an <cite>ip:</cite> prefix followed by any IP
+address that falls within the network; or a <cite>vlan:</cite> prefix
+followed by a numeric VLAN tag, e.g. <cite>vlan:23</cite> for VLAN number 23.
+Valid VLAN tags must be in the range of 1 to 4095 inclusive.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type networks:</th><td class="field-body">list of unicodes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param not_networks:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">List of networks (defined in MAAS) to which the
+node must not be attached.  The returned noded won&#8217;t be attached to
+any of the specified networks.  A network can be identified by the
+name assigned to it in MAAS; or by an <cite>ip:</cite> prefix followed by any
+IP address that falls within the network; or a <cite>vlan:</cite> prefix
+followed by a numeric VLAN tag, e.g. <cite>vlan:23</cite> for VLAN number 23.
+Valid VLAN tags must be in the range of 1 to 4095 inclusive.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type not_networks:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">list of unicodes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param not_connected_to:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">List of routers&#8217; MAC Addresses the returned
+node must not be connected to.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type connected_to:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">list of unicodes</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param zone:</th><td class="field-body">An optional name for a physical zone the acquired
+node should be located in.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type zone:</th><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">type not_in_zone:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Optional list of physical zones from which the
+node should not be acquired.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type not_in_zone:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">List of unicodes.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param agent_name:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">An optional agent name to attach to the
+acquired node.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type agent_name:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodes/</span></tt> <tt class="docutils literal"><span class="pre">op=check_commissioning</span></tt></p>
+<blockquote>
+<div><p>Check all commissioning nodes to see if they are taking too long.</p>
+<p>Anything that has been commissioning for longer than
+settings.COMMISSIONING_TIMEOUT is moved into the FAILED_TESTS status.</p>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodes/</span></tt> <tt class="docutils literal"><span class="pre">op=new</span></tt></p>
+<blockquote>
+<div><p>Create a new Node.</p>
+<p>When a node has been added to MAAS by an admin MAAS user, it is
+ready for allocation to services running on the MAAS.
+The minimum data required is:
+architecture=&lt;arch string&gt; (e.g. &#8220;i386/generic&#8221;)
+mac_addresses=&lt;value&gt; (e.g. &#8220;aa:bb:cc:dd:ee:ff&#8221;)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param architecture:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">A string containing the architecture type of
+the node.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param mac_addresses:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">One or more MAC addresses for the node.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param hostname:</th><td class="field-body">A hostname. If not given, one will be generated.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param power_type:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">A power management type, if applicable (e.g.
+&#8220;virsh&#8221;, &#8220;ipmi&#8221;).</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodes/</span></tt> <tt class="docutils literal"><span class="pre">op=release</span></tt></p>
+<blockquote>
+<div><p>Release multiple nodes.</p>
+<p>This places the nodes back into the pool, ready to be reallocated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param nodes:</th><td class="field-body">system_ids of the nodes which are to be released.
+(An empty list is acceptable).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">The system_ids of any nodes that have their status
+changed by this call. Thus, nodes that were already released
+are excluded from the result.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/nodes/</span></tt> <tt class="docutils literal"><span class="pre">op=set_zone</span></tt></p>
+<blockquote>
+<div><p>Assign multiple nodes to a physical zone at once.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param zone:</th><td class="field-body">Zone name.  If omitted, the zone is &#8220;none&#8221; and the nodes
+will be taken out of their physical zones.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param nodes:</th><td class="field-body">system_ids of the nodes whose zones are to be set.
+(An empty list is acceptable).</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="ssh-key">
+<h3>SSH Key<a class="headerlink" href="#ssh-key" title="Permalink to this headline">¶</a></h3>
+<p>Manage an SSH key.</p>
+<blockquote>
+<div>SSH keys can be retrieved or deleted.</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">/api/1.0/account/prefs/sshkeys/{keyid}/</span></tt></dt>
+<dd>DELETE an SSH key.</dd>
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/account/prefs/sshkeys/{keyid}/</span></tt></dt>
+<dd>GET an SSH key.</dd>
+</dl>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/account/prefs/sshkeys/{keyid}/</span></tt> <tt class="docutils literal"><span class="pre">op=delete</span></tt></p>
+<blockquote>
+<div>DELETE an SSH key.</div></blockquote>
+</div>
+<div class="section" id="ssh-keys">
+<h3>SSH Keys<a class="headerlink" href="#ssh-keys" title="Permalink to this headline">¶</a></h3>
+<p>Manage the collection of all the SSH keys in this MAAS.</p>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/account/prefs/sshkeys/</span></tt> <tt class="docutils literal"><span class="pre">op=list</span></tt></p>
+<blockquote>
+<div>List all keys belonging to the requesting user.</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/account/prefs/sshkeys/</span></tt> <tt class="docutils literal"><span class="pre">op=new</span></tt></p>
+<blockquote>
+<div><p>Add a new SSH key to the requesting user&#8217;s account.</p>
+<p>The request payload should contain the public SSH key data in form
+data whose name is &#8220;key&#8221;.</p>
+</div></blockquote>
+</div>
+<div class="section" id="tag">
+<h3>Tag<a class="headerlink" href="#tag" title="Permalink to this headline">¶</a></h3>
+<p>Manage a Tag.</p>
+<blockquote>
+<div><p>Tags are properties that can be associated with a Node and serve as
+criteria for selecting and allocating nodes.</p>
+<p>A Tag is identified by its name.</p>
+</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">/api/1.0/tags/{name}/</span></tt></dt>
+<dd>Delete a specific Tag.</dd>
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/tags/{name}/</span></tt></dt>
+<dd>Read a specific Tag</dd>
+</dl>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/tags/{name}/</span></tt> <tt class="docutils literal"><span class="pre">op=nodes</span></tt></p>
+<blockquote>
+<div>Get the list of nodes that have this tag.</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/tags/{name}/</span></tt> <tt class="docutils literal"><span class="pre">op=rebuild</span></tt></p>
+<blockquote>
+<div><p>Manually trigger a rebuild the tag &lt;=&gt; node mapping.</p>
+<p>This is considered a maintenance operation, which should normally not
+be necessary. Adding nodes or updating a tag&#8217;s definition should
+automatically trigger the appropriate changes.</p>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/tags/{name}/</span></tt> <tt class="docutils literal"><span class="pre">op=update_nodes</span></tt></p>
+<blockquote>
+<div><p>Add or remove nodes being associated with this tag.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param add:</th><td class="field-body">system_ids of nodes to add to this tag.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param remove:</th><td class="field-body">system_ids of nodes to remove from this tag.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param definition:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">(optional) If supplied, the definition will be
+validated against the current definition of the tag. If the value
+does not match, then the update will be dropped (assuming this was
+just a case of a worker being out-of-date)</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param nodegroup:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">A uuid of a nodegroup being processed. This value is
+optional. If not supplied, the requester must be a superuser. If
+supplied, then the requester must be the worker associated with
+that nodegroup, and only nodes that are part of that nodegroup can
+be updated.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">PUT</span> <span class="pre">/api/1.0/tags/{name}/</span></tt></dt>
+<dd><p class="first">Update a specific Tag.</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param name:</th><td class="field-body">The name of the Tag to be created. This should be a short
+name, and will be used in the URL of the tag.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param comment:</th><td class="field-body">A long form description of what the tag is meant for.
+It is meant as a human readable description of the tag.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param definition:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">An XPATH query that will be evaluated against the
+hardware_details stored for all nodes (output of <cite>lshw -xml</cite>).</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="section" id="tags">
+<h3>Tags<a class="headerlink" href="#tags" title="Permalink to this headline">¶</a></h3>
+<p>Manage the collection of all the Tags in this MAAS.</p>
+<p><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/tags/</span></tt> <tt class="docutils literal"><span class="pre">op=list</span></tt></p>
+<blockquote>
+<div><p>List Tags.</p>
+<p>Get a listing of all tags that are currently defined.</p>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/tags/</span></tt> <tt class="docutils literal"><span class="pre">op=new</span></tt></p>
+<blockquote>
+<div><p>Create a new Tag.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param name:</th><td class="field-body">The name of the Tag to be created. This should be a short
+name, and will be used in the URL of the tag.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param comment:</th><td class="field-body">A long form description of what the tag is meant for.
+It is meant as a human readable description of the tag.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param definition:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">An XPATH query that will be evaluated against the
+hardware_details stored for all nodes (output of <cite>lshw -xml</cite>).</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param kernel_opts:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Can be None. If set, nodes associated with this tag
+will add this string to their kernel options when booting. The
+value overrides the global &#8216;kernel_opts&#8217; setting. If more than one
+tag is associated with a node, the one with the lowest alphabetical
+name will be picked (eg 01-my-tag will be taken over 99-tag-name).</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="users">
+<h3>Users<a class="headerlink" href="#users" title="Permalink to this headline">¶</a></h3>
+<p>Manage the user accounts of this MAAS.</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/users/</span></tt></dt>
+<dd>List users.</dd>
+<dt><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/users/</span></tt></dt>
+<dd><p class="first">Create a MAAS user account.</p>
+<p>This is not safe: the password is sent in plaintext.  Avoid it for
+production, unless you are confident that you can prevent eavesdroppers
+from observing the request.</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param username:</th><td class="field-body">Identifier-style username for the new user.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type username:</th><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param email:</th><td class="field-body">Email address for the new user.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type email:</th><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param password:</th><td class="field-body">Password for the new user.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type password:</th><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param is_superuser:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Whether the new user is to be an administrator.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type is_superuser:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">bool (&#8216;0&#8217; for False, &#8216;1&#8217; for True)</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="section" id="zone">
+<h3>Zone<a class="headerlink" href="#zone" title="Permalink to this headline">¶</a></h3>
+<p>Manage a physical zone.</p>
+<blockquote>
+<div><p>Any node is in a physical zone, or &#8220;zone&#8221; for short.  The meaning of a
+physical zone is up to you: it could identify e.g. a server rack, a
+network, or a data centre.  Users can then allocate nodes from specific
+physical zones, to suit their redundancy or performance requirements.</p>
+<p>This functionality is only available to administrators.  Other users can
+view physical zones, but not modify them.</p>
+</div></blockquote>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">DELETE</span> <span class="pre">/api/1.0/zones/{name}/</span></tt></dt>
+<dd>DELETE request.  Delete zone.</dd>
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/zones/{name}/</span></tt></dt>
+<dd>GET request.  Return zone.</dd>
+<dt><tt class="docutils literal"><span class="pre">PUT</span> <span class="pre">/api/1.0/zones/{name}/</span></tt></dt>
+<dd>PUT request.  Update zone.</dd>
+</dl>
+</div>
+<div class="section" id="zones">
+<h3>Zones<a class="headerlink" href="#zones" title="Permalink to this headline">¶</a></h3>
+<p>Manage physical zones.</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">GET</span> <span class="pre">/api/1.0/zones/</span></tt></dt>
+<dd><p class="first">List zones.</p>
+<p class="last">Get a listing of all the physical zones.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">POST</span> <span class="pre">/api/1.0/zones/</span></tt></dt>
+<dd><p class="first">Create a new physical zone.</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param name:</th><td class="field-body">Identifier-style name for the new zone.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type name:</th><td class="field-body">unicode</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param description:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Free-form description of the new zone.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">type description:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">unicode</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+{% endblock %}
