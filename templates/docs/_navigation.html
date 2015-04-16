@@ -1,0 +1,138 @@
+<div class="section" id="setting-up-a-maas-server">
+<h2>Setting up a MAAS server<a class="headerlink" href="#setting-up-a-maas-server" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install">Installing MAAS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install#installing-maas-from-the-archive">Installing MAAS from the archive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install#installing-maas-from-ubuntu-server-boot-media">Installing MAAS from Ubuntu Server boot media</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install#post-install-tasks">Post-Install tasks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install#create-a-superuser-account">Create a superuser account</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install#log-in-on-the-server">Log in on the server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install#import-the-boot-images">Import the boot images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install#configure-dhcp">Configure DHCP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install#configure-switches-on-the-network">Configure switches on the network</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configure">Additional Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configure#manual-dhcp-configuration">Manual DHCP configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure#ssl-support">SSL Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure#choosing-a-series-to-install">Choosing a series to install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure#altering-the-preseed-file">Altering the Preseed file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure#installing-additional-clusters">Installing additional clusters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure#client-side-dns-configuration">Client-side DNS configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cluster-configuration">Cluster Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cluster-configuration#network-requirements">Network requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cluster-configuration#cluster-acceptance">Cluster acceptance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cluster-configuration#cluster-interface-management">Cluster interface management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cluster-configuration#multiple-networks">Multiple networks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nodes">Adding nodes to the system</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nodes#automatic-discovery">Automatic Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes#manually-add-nodes">Manually add nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nodes#virtual-machine-nodes">Virtual machine nodes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hardware-enablement-kernels">Using hardware-enablement kernels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hardware-enablement-kernels#what-are-hardware-enablement-kernels">What are hardware-enablement kernels?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hardware-enablement-kernels#importing-hardware-enablement-kernels">Importing hardware-enablement kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hardware-enablement-kernels#using-hardware-enablement-kernels-in-maas">Using hardware-enablement kernels in MAAS</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="networks">Networks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="networks#defining-networks">Defining networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networks#connecting-nodes-to-networks">Connecting nodes to networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="networks#placement-constraints">Placement constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kernel-options">Setting kernel boot options</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kernel-options#global-kernel-options">Global kernel options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-options#per-node-kernel-options">Per-node kernel options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installing-ubuntu">Installing Ubuntu and deploying nodes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installing-ubuntu#the-default-installer">The default installer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-ubuntu#the-fast-installer">The fast installer</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+
+<aside class="four-col box">
+    <div class="accordion">
+        <div class="accordion__tab">
+            <h4 class="accordion__tab-title">Introduction</h4>
+            <div class="accordion__tab-content">
+                <ul class="accordion__tab-list">
+                    <li class="accordion__tab-item">
+                        <p><a class="accordion__tab-link" href="/docs/about">About this documentation</a></p>
+                        <ul>
+                            <li class="accordion__tab-item">
+                                <p><a class="accordion__tab-link" href="/docs/about#getting-it">Getting it</a></p>
+                            </li>
+                            <li class="accordion__tab-item">
+                                <p><a class="accordion__tab-link" href="/docs/about#contributing">Contributing</a></p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="accordion__tab-item">
+                        <p><a class="accordion__tab-link" href="/docs/orientation">Orientation</a></p>
+                        <ul>
+                             <li class="accordion__tab-item">
+                                <a class="accordion__tab-link" href="/docs/orientation#maas-in-brief">MAAS in Brief</a>
+                            </li>
+                            <li class="accordion__tab-item">
+                                <a class="accordion__tab-link" href="/docs/orientation#do-i-need-maa">Do I Need MAAS?</a>
+                            </li>
+                            <li class="accordion__tab-item">
+                                <a class="accordion__tab-link" href="/docs/orientation#a-typical-maas-setup">A Typical MAAS setup</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="accordion__tab-item">
+                        <p><a class="accordion__tab-link" href="/docs/changelog">Changelog</a></p>
+                        <ul>
+                            <li class="accordion__tab-item">
+                                <a class="accordion__tab-link" href="/docs/changelog#id1">1.5.1</a>
+                            </li>
+                            <li class="accordion__tab-item">
+                                <a class="accordion__tab-link" href="/docs/changelog#id2">1.5</a>
+                            </li>
+                            <li class="accordion__tab-item">
+                                <a class="accordion__tab-link" href="/docs/changelog#id3">1.4</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="accordion__tab">
+            <h4 class="accordion__tab-title">Changelog</h4>
+            <div class="accordion__tab-content">
+                <ul class="accordion__tab-list">
+                    <li class="accordion__tab-item">
+                        <p><a class="accordion__tab-link" href="/docs/changelog">Changelog</a></p>
+                        <ul>
+                            <li class="accordion__tab-item">
+                                <a class="accordion__tab-link" href="/docs/changelog#id1">1.5.1</a>
+                            </li>
+                            <li class="accordion__tab-item">
+                                <a class="accordion__tab-link" href="/docs/changelog#id2">1.5</a>
+                            </li>
+                            <li class="accordion__tab-item">
+                                <a class="accordion__tab-link" href="/docs/changelog#id3">1.4</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</aside>

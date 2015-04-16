@@ -42,48 +42,7 @@
 	        <div id="main-content">
 	        	<div class="row">
 	        		<div class="inner-wrapper">
-	        			<aside class="four-col box">
-	        				<div class="accordion">
-							    <div class="accordion__tab">
-							        <h4 class="accordion__tab-title">Title</h4>
-							        <div class="accordion__tab-content">
-							            <ul class="accordion__tab-list">
-							                <li class="accordion__tab-item">
-							                    <a class="accordion__tab-link" href="">Link</a>
-							                </li>
-							                <li class="accordion__tab-item">
-							                    <a class="accordion__tab-link" href="">Link</a>
-							                </li>
-							                <li class="accordion__tab-item">
-							                    <a class="accordion__tab-link" href="">Link</a>
-							                </li>
-							                <li class="accordion__tab-item">
-							                    <a class="accordion__tab-link" href="">Link</a>
-							                </li>
-							            </ul>
-							        </div>
-							    </div>
-							    <div class="accordion__tab">
-							        <h4 class="accordion__tab-title">Title</h4>
-							        <div class="accordion__tab-content">
-							            <ul class="accordion__tab-list">
-							                <li class="accordion__tab-item">
-							                    <a class="accordion__tab-link" href="">Link</a>
-							                </li>
-							                <li class="accordion__tab-item">
-							                    <a class="accordion__tab-link" href="">Link</a>
-							                </li>
-							                <li class="accordion__tab-item">
-							                    <a class="accordion__tab-link" href="">Link</a>
-							                </li>
-							                <li class="accordion__tab-item">
-							                    <a class="accordion__tab-link" href="">Link</a>
-							                </li>
-							            </ul>
-							        </div>
-							    </div>
-							</div>
-	        			</aside>
+	        			{% include "docs/_navigation.html" %}
 	        			<div class="eight-col last-col">
 	        				{% block content %}{% endblock %}
 	        			</div>
@@ -94,7 +53,7 @@
 	    <footer class="global clearfix no-global">
 	      <nav id="main-navigation" role="navigation" class="clearfix">
 	        <div class="legal clearfix has-cookie">
-	            <p class="twelve-col">© 2015 Canonical Ltd. Ubuntu and Canonical are registered trademarks of Canonical Ltd.</p>
+	            <p class="twelve-col">&copy; 2015 Canonical Ltd. Ubuntu and Canonical are registered trademarks of Canonical Ltd.</p>
 	            <ul class="inline-list clear">
 	                <li><a href="/legal"><small>Legal information</small></a>
 	                </li>
