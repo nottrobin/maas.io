@@ -1,3 +1,8 @@
+{% extends "docs/base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="fixing-security-related-issues-in-maas">Fixing security-related issues in MAAS</h1>
 <p>The critical thing to remember is that details of the bug <em>must not leak</em> before a package exists in the Ubuntu archive that fixes it. Only then can details be unembargoed.</p>
 <p>Here's a list, in order, of things we should do.</p>
@@ -12,3 +17,4 @@
 <li>When finished, <strong>do not</strong> land the branch. Notify the <a href="https://launchpad.net/~ubuntu-server">Ubuntu Server Team</a> and the <a href="https://launchpad.net/~ubuntu-security">Ubuntu Security Team</a> that there is a patch available on the merge proposal (and subscribe the security team to it).</li>
 <li>When they notify that the package(s) has/have been published to the archive, the branch(es) can now land on our upstream.</li>
 </ol>
+{% endblock %}

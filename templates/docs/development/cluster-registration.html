@@ -1,3 +1,8 @@
+{% extends "docs/base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="how-cluster-registration-works-in-maas">How cluster registration works in MAAS</h1>
 <p>A region controller associates with one or more cluster controllers, each of which is responsible for contacting the region controller itself and announcing its presence. An admin must accept or reject each cluster that registers itself with the region controller, except in the special circumstance mentioned in first-cluster.</p>
 <p>There is always at least one cluster controller in MAAS (known as a NodeGroup in the code) which is known as the 'master'. The Nodegroup entry always exists even if no cluster controllers have contacted the region controller yet, so that it can be used as a default when adding nodes in the API or UI before the cluster controller is defined. Once a real cluster controller connects it will become this master.</p>
@@ -29,3 +34,4 @@ CLUSTER_UUID=&quot;adfd3977-f251-4f2c-8d61-745dbd690bf2&quot;</code></pre>
 <li><code>NodeGroup.objects.ensure_data()</code> and</li>
 <li><code>AnonNodeGroupsHandler.register()</code>.</li>
 </ul>
+{% endblock %}

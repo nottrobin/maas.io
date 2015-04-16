@@ -1,3 +1,9 @@
+{% extends "docs/base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
+
 <h1 id="building-ubuntu-packages-of-maas">Building Ubuntu packages of MAAS</h1>
 <p>Using a virtual machine from a cloud provider seems to be easier and less hassle than using a local VM or LXC container, but the same recipe ought to apply.</p>
 <p>You need to build on the same OS that the package will be targeted to, so use a Precise instance to make packages for Precise, for example.</p>
@@ -38,3 +44,4 @@ Standards-Version: 3.9.3
 <li><p>On the remote instance you can optionally upload to a PPA:</p>
 <pre><code>dput -fu ppa:maas-maintainers/name-of-ppa *.changes</code></pre></li>
 </ol>
+{% endblock %}

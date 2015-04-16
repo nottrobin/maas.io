@@ -1,3 +1,8 @@
+{% extends "docs/base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="dhcp-lease-scanning-and-dns">DHCP lease scanning and DNS</h1>
 <h2 id="overview">Overview</h2>
 <p>In a MAAS system, cluster controllers may optionally manage the DHCP, and the region controller may optionally manage the DNS.</p>
@@ -9,3 +14,4 @@
 <p>If a new lease is found then the dns.dns_update_zones() function gets called which takes two steps:</p>
 <pre><code>#. Write out updated zone files.
 #. Ask BIND to reload the zone.</code></pre>
+{% endblock %}

@@ -1,3 +1,8 @@
+{% extends "docs/base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="tagging">Tagging</h1>
 <h2 id="auto-tags-or-tags-with-expressions">Auto tags, or tags with expressions</h2>
 <p>These kind of tags have an associated XPath expression that is evaluated against hardware information as obtained from running <code>lshw</code> during node commissioning.</p>
@@ -26,3 +31,4 @@
 <p>To do this, <code>VersionIndexHandler.signal</code> calls <code>populate_tags_for_single_node</code> just before saving all the changes. This happens in the <strong>region</strong>. While it's a computationally expensive operation, the overhead of spinning this work out to a cluster controller negates any benefit that might gained by doing so.</p>
 <h2 id="manual-tags-or-tags-without-expressions">Manual tags, or tags without expressions</h2>
 <p>The <em>manual</em> part refers to how these tags are associated with nodes. Instead of being automatically associated as the result of evaluating the tag expression, these tags must be manually associated with a node. A manual tag is denoted by the absence of an expression.</p>
+{% endblock %}

@@ -1,3 +1,8 @@
+{% extends "docs/base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="how-preseeds-work-in-maas">How preseeds work in MAAS</h1>
 <p>A preseed is what MAAS sends to the <code>cloud-init</code> process that starts up as part of node enlistment, commissioning and installation. It is a specially formatted chunk of text. MAAS does not care what that formatting is, it just knows it is text and uses <a href="http://pythonpaste.org/tempita/">Tempita</a> templates to render a final file based on variables that are required depending on the context.</p>
 <h2 id="preseed-templates">Preseed templates</h2>
@@ -72,3 +77,4 @@ only supported the Ubuntu OS, if the node OS is Ubuntu paths without the
 <pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="fu">late_commands:</span>
   <span class="fu">add_repo:</span> <span class="kw">[</span><span class="st">&quot;curtin&quot;</span><span class="fu">, &quot;in-target&quot;, &quot;--&quot;, &quot;add-apt-repository&quot;, &quot;-y&quot;, &quot;ppa:</span>my/ppa&quot;]
   <span class="fu">custom:</span> curtin in-target -- sh -c &quot;/bin/echo -en &#39;Installed {{node.system_id}}&#39; &gt; /tmp/maas_system_id&quot;</code></pre>
+{% endblock %}

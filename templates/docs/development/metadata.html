@@ -1,3 +1,8 @@
+{% extends "docs/base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="the-metadata-api">The Metadata API</h1>
 <p>A MAAS region controller provides a separate API (the metadata API) for the benefit of the nodes themselves. This is where a node obtains the details of how it should be set up, such as which SSH keys should be installed in order to give a particular user remote access to the system.</p>
 <p>As a MAAS user or administrator, you do not need to request this information yourself. It is normally up to <code>cloud-init</code> to do this while setting up the node. You'll find more about how this works in cloud-init's <a href="http://cloudinit.readthedocs.org/en/latest/topics/datasources.html">datasources</a> documentation.</p>
@@ -34,3 +39,4 @@
 <p>The MAAS metadata API supports a few non-GET operations. These work just like the ones on the main region-controller API &lt;region-controller-api&gt;, but they are meant to be invoked by nodes. The URL for these calls is <code>/2013-03-01/</code>, and the operation name is passed as a multipart form item called &quot;op&quot;. Other parameters are passed in the same way.</p>
 <p>The <code>signal</code> call notifies the region controller of the state of a commissioning node. The node sends running updates, as well as output produced by the commissioning scripts, and finally completion information through this call.</p>
 <p>When a node is done installing, it may call POST operations <code>netboot_on</code> and <code>netboot_off</code> to instruct MAAS to enable or disable its network boot setting.</p>
+{% endblock %}

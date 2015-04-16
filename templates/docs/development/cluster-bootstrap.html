@@ -1,3 +1,8 @@
+{% extends "docs/base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="bootstrapping-a-cluster">Bootstrapping a cluster</h1>
 <h2 id="considerations">Considerations</h2>
 <p>A new cluster needs to register itself with the region. At the same moment that it's accepted by the region, the region starts configuring it via RPC, so we need an RPC connection open when registering.</p>
@@ -39,3 +44,4 @@
 <li>Mechanism to limit available RPC calls.</li>
 <li>Mechanism to defer start-up of &quot;full&quot; services.</li>
 </ol>
+{% endblock %}

@@ -1,3 +1,8 @@
+{% extends "docs/base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="transactions">Transactions</h1>
 <h2 id="how-we-rollback-in-maas">How we roll(back) in MAAS</h2>
 <p>MAAS runs almost all transactions using <a href="http://www.postgresql.org/docs/9.4/static/transaction-iso.html">serializable isolation</a>. This is very strict and PostgreSQL can and does reject transactions because of conflicts with other transactions; this are business-as-usual.</p>
@@ -27,3 +32,4 @@
 <li><p><code>transaction.atomic</code> is also okay as a context manager in <strong>tests</strong>, because you shouldn't run into serialisation failures there, and you may want more control over how post-commit hooks are handled anyway.</p>
 <p>Don't stress about this too much though: as long as your test inherits <code>PostCommitHooksTestMixin</code> <em>as most region tests already do</em> then your tests will fail if post-commit hooks are left dangling.</p></li>
 </ul>
+{% endblock %}

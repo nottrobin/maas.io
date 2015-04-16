@@ -1,3 +1,8 @@
+{% extends "docs/base_docs.html" %}
+
+{% block page_class %}docs{% endblock %}
+
+{% block content %}
 <h1 id="rpc-howto">RPC HOWTO</h1>
 <p>MAAS contains an RPC mechanism such that every process in the region is connected to every process in the cluster (strictly, every pserv process). It's based on <a href="http://amp-protocol.net/">AMP</a>, specifically <a href="http://twistedmatrix.com/documents/current/core/howto/amp.html">Twisted's implementation</a>.</p>
 <h2 id="where-do-i-start">Where do I start?</h2>
@@ -69,3 +74,4 @@ for response in async.gather(calls, timeout=10):
 <h3 id="rpc-declarations-for-cluster-controllers">RPC declarations for cluster controllers</h3>
 <h3 id="rpc-implementation-for-cluster-controllers">RPC implementation for cluster controllers</h3>
 <h3 id="helpers">Helpers</h3>
+{% endblock %}
