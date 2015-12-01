@@ -1,0 +1,71 @@
+<h3 id="navigation">Navigation<a class="anchor" href="#navigation"></a></h3>
+<ul>
+<li><a href="getting-help.html" title="Getting help">next</a></li>
+<li><a href="maascli.html" title="Command Line Interface">previous</a> |</li>
+<li><a href="index.html">MAAS 1.8 documentation</a> »</li>
+</ul>
+<h1 id="capabilities">Capabilities<a href="#capabilities" title="Permalink to this headline">¶</a><a class="anchor" href="#capabilities"></a></h1>
+<p>MAAS publishes a special view at <code class="docutils
+.literal">.../api/1.0/version/</code> that returns a list of the server’s capabilities. It’s
+transferred as a JSON document:</p>
+<pre><code>{"capabilities": ["name-of-capability", ...]}
+</code></pre>
+<h2 id="list-of-capabilities">List of capabilities<a href="#list-of-capabilities" title="Permalink to this headline">¶</a><a class="anchor" href="#list-of-capabilities"></a></h2>
+<p>Check for the following strings in the capabilities list to see what
+features the MAAS server supports. Use these in preference to gating on
+the version when creating a client application.</p>
+<dl>
+<dt><code class="docutils literal">networks-management</code></dt>
+<dd>Passive modelling of the network environment that cluster
+controllers nodes are in, including network interfaces, subnets,
+VLAN tags, and connectivity between them. See
+<a href="networks.html#networks"><em>Networks</em></a> for more information.</dd>
+<dt><code class="docutils literal">static-ipaddresses</code></dt>
+<dd>Static IP address allocation to nodes, including user-reserved IPs
+and admin- allocated ‘sticky’ IPs. Available since version 1.6. See
+<a href="static-ips.html#static-ips"><em>Static IPs</em></a> for more information.</dd>
+<dt><code class="docutils literal">ipv6-deployment-ubuntu</code></dt>
+<dd>Deploy Ubuntu nodes with IPv6 networking enabled. See <a href="ipv6.html#ipv6"><em>Managing
+IPv6 Networks</em></a> for more about this feature.</dd>
+<dt><code class="docutils literal">devices-management</code></dt>
+<dd>Management of devices (non-installable nodes). Available since
+version 1.8. See <a href="devices.html#devices"><em>Devices</em></a> for more about
+this feature.</dd>
+</dl>
+<p><a href="index.html" title="MAAS Documentation Homepage"><img alt="MAAS
+logo" src="_static/maas-logo-200.png" /></a></p>
+<h2 id="maas" style="text-align:center;">MAAS<a class="anchor" href="#maas"></a></h2>
+<p>Metal As A Service.</p>
+<p>\
+ \</p>
+<ul>
+<li><a href="#">Capabilities</a><ul>
+<li><a href="#list-of-capabilities">List of capabilities</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="related-topics">Related Topics<a class="anchor" href="#related-topics"></a></h3>
+<ul>
+<li><a href="index.html">Documentation overview</a><ul>
+<li>Previous: <a href="maascli.html" title="previous chapter">Command Line
+    Interface</a></li>
+<li>Next: <a href="getting-help.html" title="next chapter">Getting help</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="this-page">This Page<a class="anchor" href="#this-page"></a></h3>
+<ul>
+<li><a href="_sources/capabilities.txt">Show Source</a></li>
+</ul>
+<h3 id="quick-search">Quick search<a class="anchor" href="#quick-search"></a></h3>
+<p>Enter search terms or a module, class or function name.</p>
+<h3 id="navigation">Navigation<a class="anchor" href="#navigation"></a></h3>
+<ul>
+<li><a href="getting-help.html" title="Getting help">next</a></li>
+<li><a href="maascli.html" title="Command Line Interface">previous</a> |</li>
+<li><a href="index.html">MAAS 1.8 documentation</a> »</li>
+</ul>
+<p>© Copyright 2012-2015, MAAS Developers. Ubuntu and Canonical are
+registered trademarks of <a href="http://canonical.com">Canonical Ltd</a>.</p>
+<p>Revision 4036 (2015-08-05 16:30:57 +0000). Documentation generation
+date: 2015-08-12 22:30:33 +0100.</p>

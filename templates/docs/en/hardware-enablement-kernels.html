@@ -1,0 +1,44 @@
+<h1 id="using-hardware-enablement-kernels">Using hardware-enablement kernels<a class="anchor" href="#using-hardware-enablement-kernels"></a></h1>
+<p class="note"><strong> Note</strong>: This feature is available in MAAS versions 1.5 and above.</p>
+<p>MAAS allows you to use hardware enablement kernels when booting nodes
+that require them.</p>
+<h2 id="what-are-hardware-enablement-kernels?">What are hardware-enablement kernels?<a class="anchor" href="#what-are-hardware-enablement-kernels?"></a></h2>
+<p>Brand new hardware gets released all the time. We want that hardware to
+work well with Ubuntu and MAAS, even if it was released after the latest
+release of MAAS or Ubuntu. Hardware Enablement (HWE) is all about
+keeping pace with the new hardware.</p>
+<p>Ubuntu’s solution to this is to offer newer kernels for older releases.
+There are at least two kernels on offer for Ubuntu releases: the
+“generic” kernel – i.e. the kernel released with the current series –
+and the Hardware Enablement kernel, which is the most recent kernel
+release.</p>
+<p>There are separate HWE kernels for each release of Ubuntu, referred to
+as <code class="docutils literal">hwe-&lt;release letter&gt;</code>. So, the 14.04 / Trusty
+Tahr HWE kernel is called <code class="docutils literal">hwe-t</code>, the 12.10 /
+Quantal Quetzal HWE kernel is called <code class="docutils literal">hwe-q</code> and so
+on. This allows you to use newer kernels with older releases, for
+example running Precise with a Saucy (hwe-s) kernel.</p>
+<p>For more information see the <a href="https://wiki.ubuntu.com/Kernel/LTSEnablementStack">LTS Enablement
+Stack</a> page on the
+Ubuntu wiki.</p>
+<h2 id="booting-hardware-enablement-kernels">Booting hardware-enablement kernels<a class="anchor" href="#booting-hardware-enablement-kernels"></a></h2>
+<p>MAAS imports hardware-enablement kernels along with its generic boot
+images, but as different “sub-architectures” to the default “generic”
+one.</p>
+<p>So, for example, a common server might have architecture and
+sub-architecture of <code class="docutils literal">amd64/generic</code>, but some newer
+system chassis which doesn’t become fully functional with the default
+kernel for Ubuntu 14.04 Trusty Tahr, for example, may require
+<code class="docutils literal">amd64/hwe-t</code>.</p>
+<p>The quickest way to make a node use a hardware-enablement kernel is by
+using the MAAS command, like this:</p>
+<pre><code class="bash">maas &lt;profile-name&gt; node update &lt;system-id&gt; architecture=amd64/hwe-t
+</code></pre>
+
+<p>If you specify an architecture that doesn’t exist (e.g.
+<code>amd64/hwe-zz</code>), the <code>maas</code>
+command will return an error.</p>
+<p>It’s also possible to use HWE kernels from the MAAS web UI, by visiting
+the Node’s page and clicking <code>Edit node</code>. Under the
+Architecture field, you will be able to select any HWE kernels that have
+been imported onto that node’s cluster controller.</p>

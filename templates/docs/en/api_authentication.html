@@ -1,0 +1,102 @@
+<h3 id="navigation">Navigation<a class="anchor" href="#navigation"></a></h3>
+<ul>
+<li><a href="maascli.html" title="Command Line Interface">next</a></li>
+<li><a href="api.html" title="MAAS API">previous</a> |</li>
+<li><a href="index.html">MAAS 1.8 documentation</a> »</li>
+</ul>
+<h1 id="api-authentication">API authentication<a href="#api-authentication" title="Permalink to this headline">¶</a><a class="anchor" href="#api-authentication"></a></h1>
+<p>MAAS’s API uses <a href="http://en.wikipedia.org/wiki/OAuth">OAuth</a> as its
+authentication mechanism. There isn’t a third party involved (as in
+3-legged OAuth) and so the process used is what’s commonly referred to
+as 0-legged OAuth: the consumer accesses protected resources by
+submitting OAuth signed requests.</p>
+<p>Note that some API endpoints support unauthenticated requests (i.e.
+anonymous access). See the <a href="api.html"><em>API documentation</em></a> for details.</p>
+<h1 id="examples">Examples<a href="#examples" title="Permalink to this headline">¶</a><a class="anchor" href="#examples"></a></h1>
+<p>Here are two examples on how to perform an authenticated GET request to
+retrieve the list of nodes. The \&lt;key>, \&lt;secret>, \&lt;consumer_key>
+tokens are the three elements that compose the API key (API key =
+‘\&lt;consumer_key>:\&lt;key>:\&lt;secret>’).</p>
+<h2 id="python">Python<a href="#python" title="Permalink to this headline">¶</a><a class="anchor" href="#python"></a></h2>
+<pre><code>import oauth.oauth as oauth
+import httplib2
+import uuid
+
+def perform_API_request(site, uri, method, key, secret, consumer_key):
+    resource_tok_string = "oauth_token_secret=%s&amp;oauth_token=%s" % (
+        secret, key)
+    resource_token = oauth.OAuthToken.from_string(resource_tok_string)
+    consumer_token = oauth.OAuthConsumer(consumer_key, "")
+
+    oauth_request = oauth.OAuthRequest.from_consumer_and_token(
+        consumer_token, token=resource_token, http_url=site,
+        parameters={'oauth_nonce': uuid.uuid4().get_hex()})
+    oauth_request.sign_request(
+        oauth.OAuthSignatureMethod_PLAINTEXT(), consumer_token,
+        resource_token)
+    headers = oauth_request.to_header()
+    url = "%s%s" % (site, uri)
+    http = httplib2.Http()
+    return http.request(url, method, body=None, headers=headers)
+
+# API key = '&lt;consumer_key&gt;:&lt;key&gt;:&lt;secret&gt;'
+response = perform_API_request(
+    'http://server/MAAS/api/1.0', '/nodes/?op=list', 'GET', '&lt;key&gt;', '&lt;secret&gt;',
+    '&lt;consumer_key&gt;')
+</code></pre>
+<h2 id="ruby">Ruby<a href="#ruby" title="Permalink to this headline">¶</a><a class="anchor" href="#ruby"></a></h2>
+<pre><code>require 'oauth'
+require 'oauth/signature/plaintext'
+
+def perform_API_request(site, uri, key, secret, consumer_key)
+    consumer = OAuth::Consumer.new(
+        consumer_key, "",
+        { :site =&gt; "http://localhost/MAAS/api/1.0",
+          :scheme =&gt; :header, :signature_method =&gt; "PLAINTEXT"})
+    access_token = OAuth::AccessToken.new(consumer, key, secret)
+    return access_token.request(:get, "/nodes/?op=list")
+end
+
+# API key = "&lt;consumer_key&gt;:&lt;key&gt;:&lt;secret&gt;"
+response = perform_API_request(
+     "http://server/MAAS/api/1.0", "/nodes/?op=list", "&lt;key&gt;", "&lt;secret&gt;",
+     "consumer_key&gt;")
+</code></pre>
+<p><a href="index.html" title="MAAS Documentation Homepage"><img alt="MAAS
+logo" src="_static/maas-logo-200.png" /></a></p>
+<h2 id="maas" style="text-align:center;">MAAS<a class="anchor" href="#maas"></a></h2>
+<p>Metal As A Service.</p>
+<p>\
+ \</p>
+<ul>
+<li><a href="#">API authentication</a></li>
+<li><a href="#examples">Examples</a><ul>
+<li><a href="#python">Python</a></li>
+<li><a href="#ruby">Ruby</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="related-topics">Related Topics<a class="anchor" href="#related-topics"></a></h3>
+<ul>
+<li><a href="index.html">Documentation overview</a><ul>
+<li>Previous: <a href="api.html" title="previous chapter">MAAS API</a></li>
+<li>Next: <a href="maascli.html" title="next chapter">Command Line Interface</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="this-page">This Page<a class="anchor" href="#this-page"></a></h3>
+<ul>
+<li><a href="_sources/api_authentication.txt">Show Source</a></li>
+</ul>
+<h3 id="quick-search">Quick search<a class="anchor" href="#quick-search"></a></h3>
+<p>Enter search terms or a module, class or function name.</p>
+<h3 id="navigation">Navigation<a class="anchor" href="#navigation"></a></h3>
+<ul>
+<li><a href="maascli.html" title="Command Line Interface">next</a></li>
+<li><a href="api.html" title="MAAS API">previous</a> |</li>
+<li><a href="index.html">MAAS 1.8 documentation</a> »</li>
+</ul>
+<p>© Copyright 2012-2015, MAAS Developers. Ubuntu and Canonical are
+registered trademarks of <a href="http://canonical.com">Canonical Ltd</a>.</p>
+<p>Revision 4036 (2015-08-05 16:30:57 +0000). Documentation generation
+date: 2015-08-12 22:30:33 +0100.</p>

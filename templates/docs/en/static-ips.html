@@ -1,0 +1,59 @@
+<h1 id="static-ips">Static IPs<a class="anchor" href="#static-ips"></a></h1>
+<p class="note"><strong> Note</strong>: This feature is available in MAAS versions 1.6 and above. If you’re
+writing a client application, you can check if MAAS supports this
+feature via the web API; see the documentation for the
+<code>static-ipaddresses</code> capability
+<a href="capabilities.html#cap-static-ipaddresses"><em>here</em></a>.</p>
+<p>Previously, MAAS relied on the DHCP server to allocate its own IP
+addresses to nodes, using the IP range defined on the relevant cluster
+interface. This was found to be unreliable since the IPs were only known
+once the node had booted and requested an address, and had race
+conditions when the lease expired and another machine was looking for
+its own IP.</p>
+<p>MAAS now defines an additional range on the cluster for static IPs that
+are allocated by MAAS itself (see <a href="cluster-configuration.html">Cluster
+Configuration</a> for more information about
+this).</p>
+<p>In normal operation, MAAS will automatically choose and allocate a
+static IP to any node network interfaces where it knows on which cluster
+interface that node interface is connected.</p>
+<p>The <a href="api.html">MAAS API</a> contains functions to request additional
+static IPs, which are summarised here:</p>
+<h2 id="sticky-ips">Sticky IPs<a class="anchor" href="#sticky-ips"></a></h2>
+<dl>
+<dt>Synopsis:</dt>
+<dd><code>POST /api/1.0/nodes/{system_id}/</code>
+<code>op=claim_sticky_ip_address</code></dd>
+</dl>
+<p>Normally, IPs are released back into the pool of available IPs once a
+node is released by a user. A “Sticky” IP is one which is allocated to
+an interface on a node that does not change unless the sticky IP is
+removed. This enables more predictable IPs at the cost of wasting IPs
+when the node is not in use.</p>
+<h2 id="unmanaged-user-allocated-ips">Unmanaged User-allocated IPs<a class="anchor" href="#unmanaged-user-allocated-ips"></a></h2>
+<dl>
+<dt>Synopsis:</dt>
+<dd>
+<p><code>GET /api/1.0/ipaddresses/</code></p>
+<p><code>POST /api/1.0/ipaddresses/</code>
+<code>op=release</code></p>
+<p><code>POST /api/1.0/ipaddresses/</code>
+<code>op=reserve</code></p>
+</dd>
+</dl>
+<p>This API allows users to request an ad-hoc IP address for use in any way
+they see fit. The IP is not tied to any node in MAAS and is guaranteed
+not to be in use by MAAS itself.</p>
+<p>See the full <a href="api.html"><em>MAAS API</em></a> documentation for precise technical
+details.</p>
+<p>Enter search terms or a module, class or function name.</p>
+<h3 id="navigation">Navigation<a class="anchor" href="#navigation"></a></h3>
+<ul>
+<li><a href="ipv6.html" title="Managing IPv6 Networks">next</a></li>
+<li><a href="cluster-configuration.html" title="Cluster Configuration">previous</a> |</li>
+<li><a href="index.html">MAAS 1.8 documentation</a> »</li>
+</ul>
+<p>© Copyright 2012-2015, MAAS Developers. Ubuntu and Canonical are
+registered trademarks of <a href="http://canonical.com">Canonical Ltd</a>.</p>
+<p>Revision 4036 (2015-08-05 16:30:57 +0000). Documentation generation
+date: 2015-08-12 22:30:33 +0100.</p>

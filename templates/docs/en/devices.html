@@ -1,0 +1,60 @@
+<h3 id="navigation">Navigation<a class="anchor" href="#navigation"></a></h3>
+<ul>
+<li><a href="os-support.html" title="Operating Systems Support">next</a></li>
+<li><a href="installing-ubuntu.html" title="Installing Ubuntu and deploying nodes">previous</a>
+    |</li>
+<li><a href="index.html">MAAS 1.8 documentation</a> »</li>
+</ul>
+<h1 id="devices">Devices<a href="#devices" title="Permalink to this headline">¶</a><a class="anchor" href="#devices"></a></h1>
+<p>Note</p>
+<p>This feature is available in MAAS versions 1.8 and above. If you’re
+writing a client application, you can check if MAAS supports this
+feature via the web API; see the documentation for the
+<code class="docutils literal">devices-management</code> capability
+<a href="capabilities.html#cap-devices-management"><em>here</em></a>.</p>
+<p>In addition to nodes, a MAAS cluster controller can manage <em>devices</em>.
+Devices represent non-installable machines. This feature can be used to
+track routers, virtual machines, etc. within MAAS.</p>
+<p>Same as nodes, devices can be assigned IP addresses and DNS names. IP
+addresses can be fixed, in which case the device should be configured to
+use the defined IP address, or dynamic, in which case the device can
+obtain an IP address from the MAAS DHCP server and will receive the
+configured IP address.</p>
+<p>Devices can also be assigned a parent node and will be automatically
+deleted (along with all the IP address reservations associated with it)
+when the parent node is deleted or released. This is designed to model
+and manage the virtual machines or containers running on a MAAS-deployed
+node.</p>
+<p><a href="index.html" title="MAAS Documentation Homepage"><img alt="MAAS
+logo" src="_static/maas-logo-200.png" /></a></p>
+<h2 id="maas" style="text-align:center;">MAAS<a class="anchor" href="#maas"></a></h2>
+<p>Metal As A Service.</p>
+<p>\
+ \</p>
+<h3 id="related-topics">Related Topics<a class="anchor" href="#related-topics"></a></h3>
+<ul>
+<li><a href="index.html">Documentation overview</a><ul>
+<li>Previous: <a href="installing-ubuntu.html" title="previous chapter">Installing Ubuntu and deploying
+    nodes</a></li>
+<li>Next: <a href="os-support.html" title="next chapter">Operating Systems
+    Support</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="this-page">This Page<a class="anchor" href="#this-page"></a></h3>
+<ul>
+<li><a href="_sources/devices.txt">Show Source</a></li>
+</ul>
+<h3 id="quick-search">Quick search<a class="anchor" href="#quick-search"></a></h3>
+<p>Enter search terms or a module, class or function name.</p>
+<h3 id="navigation">Navigation<a class="anchor" href="#navigation"></a></h3>
+<ul>
+<li><a href="os-support.html" title="Operating Systems Support">next</a></li>
+<li><a href="installing-ubuntu.html" title="Installing Ubuntu and deploying nodes">previous</a>
+    |</li>
+<li><a href="index.html">MAAS 1.8 documentation</a> »</li>
+</ul>
+<p>© Copyright 2012-2015, MAAS Developers. Ubuntu and Canonical are
+registered trademarks of <a href="http://canonical.com">Canonical Ltd</a>.</p>
+<p>Revision 4036 (2015-08-05 16:30:57 +0000). Documentation generation
+date: 2015-08-12 22:30:33 +0100.</p>

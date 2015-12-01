@@ -1,0 +1,26 @@
+<h2 id="do-i-need-maas?">Do I Need MAAS?<a class="anchor" href="#do-i-need-maas?"></a></h2>
+<p>MAAS certainly isn't for everyone, but why not ask yourself these questions?</p>
+<p>You probably <em>SHOULD</em> use MAAS if any or all of the following statements are true:</p>
+<ul>
+<li>You are trying to manage many physical servers.</li>
+<li>You need to get the most from your resources.</li>
+<li>You want things to work, repeatably and reliably.</li>
+</ul>
+<h2 id="a-typical-maas-setup">A Typical MAAS setup<a class="anchor" href="#a-typical-maas-setup"></a></h2>
+<p>MAAS is designed to work with your physical hardware, whether your setup includes thousands of server boxes or only a few. The key components of the MAAS software are:</p>
+<ul>
+<li>Region controller</li>
+<li>Cluster controller(s)</li>
+<li>Nodes</li>
+</ul>
+<p>The nodes are the computers you manage using MAAS. These can range from just a handful to many thousands of systems.</p>
+<p>For small (in terms of number of nodes) setups, you will probably just install the Region controller and a cluster controller on the same server - it is only worth having multiple region controllers if you need to organise your nodes into different subnets (e.g. if you have a lot of nodes). If you install the <code>maas</code> package, it will include both a region controller and a cluster controller, and they will be automatically set up to work together.</p>
+<p><img alt="image" src="../../media/orientation_architecture-diagram.*" /></p>
+<h2 id="system-requirements">System requirements<a class="anchor" href="#system-requirements"></a></h2>
+<h2 id="how-maas-is-used">How MAAS is used<a class="anchor" href="#how-maas-is-used"></a></h2>
+<p>MAAS manages a pool of nodes. After registering a new system with the MAAS and preparing it for service ("commissioning"), the new system joins this pool.</p>
+<p>From the moment a node is accepted into the MAAS, any operating system, software, or data that it may have had installed before is meant to be overwritten. A node in the pool is under MAAS's sole control, and off-limits to users.</p>
+<p>Once you have nodes in the pool, users of the MAAS can allocate them for their own use. At that point, the nodes are installed with the selected operating system and set up with the user's login credentials for remote access. This is referred to as "starting" a node in the browser interface, and as "acquiring" (and, as a separate step, "starting") a node in the API.</p>
+<p>When allocating from the API, you can specify constraints such as how much memory you need, how many CPUs, what networks the node should be connected to, what physical zone they should be in, and so on. API commands can also be issued through the <code>maas</code> command-line utility.</p>
+<p>An allocated node is not like a virtual instance in a cloud: you get complete control, including hardware drivers and root access. To upgrade a BIOS, for example, an administrator could allocate a node to themselves, and run a vendor-supplied upgrade utility. Needless to say, you also get full hardware performance and tweaking!</p>
+<p>Once you are done with a node you have allocated, you can release it back to the pool. Once again any data, software, or operating system will no longer be available.</p>

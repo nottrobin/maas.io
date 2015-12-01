@@ -1,0 +1,68 @@
+<h1 id="adding-nodes-to-the-system">Adding nodes to the system<a class="anchor" href="#adding-nodes-to-the-system"></a></h1>
+<p>Now that the MAAS controller is running, we need to make the nodes aware
+of MAAS and vice-versa. If you have set up DHCP correctly, and your
+nodes can boot via
+<a href="http://en.wikipedia.org/wiki/Preboot_Execution_Environment">PXE</a> then
+things really couldn’t be much easier and you can use 
+<a href="#auto-enlist"><em>the automatic discovery procedure</em></a>. You do not need to 
+install Ubuntu on nodes that you wish to add to MAAS prior to enlistment.</p>
+<p>To learn more about setting up DHCP, read the 
+<a href="cluster-configuration.html#cluster-configuration">cluster configuration documentation</a>.</p>
+<h2 id="automatic-discovery">Automatic Discovery<a class="anchor" href="#automatic-discovery"></a></h2>
+<p>With nodes set to boot from a PXE image, they will start, look for a
+DHCP server, receive the PXE boot details, boot the image, contact the
+MAAS server and shut down.</p>
+<p>During this process, the MAAS server will be passed information about
+the node, including the architecture, MAC address and other details
+which will be stored in the database of nodes. You can accept and
+commission the nodes via the web interface. When the nodes have been
+accepted the selected series of Ubuntu will be installed.</p>
+<p>To save time, you can also accept and commission all nodes from the
+commandline. This requires that you first log in with the API key, which
+<a href="maascli.html#api-key">you can retrieve from the web interface</a>:</p>
+<pre><code class="bash">maas maas nodes accept-all
+</code></pre>
+
+<h2 id="manually-add-nodes">Manually add nodes<a class="anchor" href="#manually-add-nodes"></a></h2>
+<p>If you know the MAC address of a node, you can manually enter details
+about the node through the web interface. Click the <code>Add Node</code> button to be
+taken to the “Add Node” form:</p>
+<p><img alt="" src="../media/add-node.png" /></p>
+<h2 id="virtual-machine-nodes">Virtual machine nodes<a class="anchor" href="#virtual-machine-nodes"></a></h2>
+<p>If you’re setting up virtual machines to use as nodes with MAAS, you
+need to configure the power type as <code>virsh</code>. For
+MAAS to be able to use virsh, make sure you have the
+<code>libvirt-bin</code> package installed.</p>
+<p>The virsh power type takes two parameters:</p>
+<ul>
+<li><strong><em>Power ID</em></strong>: This is the name of the virtual machine shown by
+    <code>sudo virsh list --all</code></li>
+<li><strong><em>Address</em></strong>: This is a libvirt connection string, such as
+    <code>qemu+ssh://ubuntu@10.0.0.2/system</code> or
+    <code>qemu:///system</code></li>
+</ul>
+<p><img alt="" src="../media/virsh-config.png" /></p>
+<p>If you want to use ssh you’ll need to generate a ssh key pair for the
+maas user. By default there is no home directory created for the maas
+user:</p>
+<pre><code class="bash">sudo mkdir /home/maas
+sudo chown maas:maas /home/maas
+</code></pre>
+
+<p>Add a login shell for the maas user:</p>
+<pre><code class="bash">sudo chsh -s /bin/bash maas
+</code></pre>
+
+<p>Become the maas user and generate a SSH keypair:</p>
+<pre><code class="bash">sudo su - maas
+ssh-keygen
+</code></pre>
+
+<p>Then add the public key to <code>/ubuntu/.ssh/authorized_keys</code> on the vm server so 
+virsh can use ssh without a password:</p>
+<pre><code class="bash">ssh-copy-id -i ~/.ssh/id_rsa ubuntu@10.0.0.2
+</code></pre>
+
+<p>As the maas user, test virsh commands against libvirt at 10.0.0.2:</p>
+<pre><code class="bash">virsh -c qemu+ssh://ubuntu@10.0.0.2/system list --all
+</code></pre>

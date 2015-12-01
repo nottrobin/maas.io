@@ -1,0 +1,91 @@
+<h1 id="operating-systems-support">Operating Systems Support<a class="anchor" href="#operating-systems-support"></a></h1>
+<p class="note"><strong> Note</strong>: This feature is available in MAAS versions 1.7 and above.</p>
+<p>Besides Ubuntu, MAAS allows users to deploy different operating systems,
+such as CentOS. Ubuntu Advantage customers can additionally deploy
+Redhat Enterprise Linux (RHEL), OpenSUSE, SLES, Window Server and
+Windows HyperV.</p>
+<h2 id="generated-images-vs.-custom-images">Generated Images vs. Custom Images<a class="anchor" href="#generated-images-vs.-custom-images"></a></h2>
+<p>MAAS supports two different classes of OS images, Generated images and
+Custom images.</p>
+<p>Generated images are images of the OS’ that MAAS team fully supports.
+Currently supported OS’ are CentOS and Windows.</p>
+<p>Custom images are images that MAAS can deploy, but may have been
+customized and differ from those that the MAAS team supports. Custom
+images can include any Ubuntu, CentOS or Windows image. Additionally,
+Redhat Enterprise Linux (RHEL), OpenSUSE and SLES images also fall under
+this category.</p>
+<h2 id="installing-maas-images">Installing MAAS Images<a class="anchor" href="#installing-maas-images"></a></h2>
+<h3 id="installing-generated-images">Installing Generated Images<a class="anchor" href="#installing-generated-images"></a></h3>
+<p>Installing MAAS Generated Images (CentOS or Windows) can be done with
+the command:</p>
+<pre><code class="bash"> maas admin boot-resources create 
+      name=&lt;os/series&gt;
+      architecture=&lt;architecture&gt; [filetype=ddtgz]
+      content@=&lt;image-name&gt;
+</code></pre>
+
+<p>The list of supported Operating Systems under Generated Images is:</p>
+<ul>
+<li>CentOS 6.5 (centos/centos65)</li>
+<li>CentOS 7 (centos/centos7)</li>
+<li>Windows Server 2012 (windows/win2012)</li>
+<li>Windows Server 2012 R2 (windows/win2012r2)</li>
+<li>Windows Hyper-V (windows/win2012hv)</li>
+<li>Windows Hyper-V R2 (windows/win2012hvr2)</li>
+</ul>
+<p>Examples:</p>
+<pre><code class="bash"> maas admin boot-resources create name=centos/centos7
+      architecture=amd64/generic content@=centos7-amd64-root-tgz
+</code></pre>
+
+<pre><code class="bash">    maas admin boot-resources create name=windows/win2012
+      architecture=amd64/generic filetype=ddtgz
+      content@=win2012-amd64-ddtgz
+</code></pre>
+
+<h3 id="installing-custom-images">Installing Custom Images<a class="anchor" href="#installing-custom-images"></a></h3>
+<p>Installing custom images require the user to specify a unique identifier
+for the OS and Release, as well as the title of the Image:</p>
+<pre><code class="bash">maas admin boot-resources create name=custom/&lt;os-release-id&gt;
+      title=&lt;title&gt; architecture=amd64/generic content@=&lt;image-name&gt;
+</code></pre>
+
+<p>Examples:</p>
+<pre><code class="bash">maas admin boot-resources create name=custom/rhel7
+      title=&quot;RedHat Enterprise Linux 7&quot; architecture=amd64/generic
+      content@=rhel7-amd64-root-tgz
+</code></pre>
+
+<p>The list of tested Operating Systems under Custom Images is:</p>
+<ul>
+<li>OpenSUSE</li>
+<li>SLES 11 and SLES 12</li>
+<li>Redhat Enterprise Linux 7 (RHEL7)</li>
+</ul>
+<h2 id="maas-image-builder">MAAS Image Builder<a class="anchor" href="#maas-image-builder"></a></h2>
+<p>The MAAS Image Builder is a script that allows users to generate their
+own images. However, <code>maas-image-builder</code> only
+supports the generation of CentOS and RHEL images. To install
+<code>maas-image-builder</code>, please follow the
+instructions:</p>
+<pre><code class="bash">sudo apt-get add-apt-repository ppa:maas-maintainers/stable
+sudo apt-get install maas-image-builder
+</code></pre>
+
+<h3 id="creating-and-installing-centos-maas-images">Creating and Installing CentOS MAAS Images<a class="anchor" href="#creating-and-installing-centos-maas-images"></a></h3>
+<p class="note"><strong> Note</strong>: Supported CentOS versions are CentOS 6.5 (centos65) and CentOS 7
+(centos7).</p>
+<p>To create a MAAS CentOS image, no ISO is needed as all of the required
+software to create the image is downloaded (from CentOS repositories) as
+part of the image generation process. To create the MAAS CentOS image,
+<code class="docutils literal">maas-image-builder</code> can be used as:</p>
+<pre><code class="bash"> maas-image-builder -a amd64 -o centos7-amd64-root-tgz centos --edition 7
+</code></pre>
+
+<p>The created image, <code>centos7-amd64-root-tgz</code>, needs
+to be uploaded into the MAAS Region Controller. This image will be
+listed under the Generated Image Section in the MAAS Image page. This
+image can be uploaded with:</p>
+<pre><code class="bash">maas admin boot-resources create name=centos/centos7
+      architecture=amd64/generic content@=./build-output/centos7-amd64-root-tgz
+</code></pre>
