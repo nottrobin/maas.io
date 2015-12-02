@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="boot-images-import-configuration">Boot images import configuration<a class="anchor" href="#boot-images-import-configuration"></a></h1>
 <p>The configuration for where a region downloads its images is defined by a set
 of "sources". Each "source" defines a Simplestreams repository location (<code>url</code>)
@@ -90,3 +96,4 @@ need to to change the source's url and keyring:</p>
 <p>To delete the source:</p>
 <pre><code class="bash">maas $PROFILE boot-source delete 2
 </code></pre>
+{% endblock %}

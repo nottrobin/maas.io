@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="changelog">Changelog<a class="anchor" href="#changelog"></a></h1>
 <h2 id="1.7.3">1.7.3<a class="anchor" href="#1.7.3"></a></h2>
 <h3 id="bug-fix-update">Bug Fix Update<a class="anchor" href="#bug-fix-update"></a></h3>
@@ -418,3 +424,4 @@ MAAS can now manage HP Moonshot Systems as any other hardware. However, in order
 <p>#1233833 Usability: deleting nodes is too easy</p>
 <p>#1185897 expose ability to re-commission node in api and cli</p>
 <p>#997092 Can't delete allocated node even if owned by self</p>
+{% endblock %}

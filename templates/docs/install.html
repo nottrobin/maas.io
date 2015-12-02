@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="installing-maas">Installing MAAS<a class="anchor" href="#installing-maas"></a></h1>
 <p>There are two main ways to install MAAS:</p>
 <blockquote>
@@ -242,3 +248,4 @@ enables the ports to come up almost immediately.</p>
 </ul>
 <p>Once everything is set up and running, you are ready to <a href="nodes.html"><em>start
 enlisting nodes</em></a></p>
+{% endblock %}
