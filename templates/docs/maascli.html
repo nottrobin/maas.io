@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="command-line-interface">Command Line Interface<a class="anchor" href="#command-line-interface"></a></h1>
 <p>As well as the web interface, many tasks can be performed by accessing
 the MAAS API directly through the <code>maas</code> command. This section details how
@@ -487,3 +493,4 @@ XPath expression which parses the XML returned by running
 <p>Because the <code>maas</code> command exposes all of the API,
 it also lists some command options which are not really intended for end
 users, such as the “file” and “boot-images” options.</p>
+{% endblock %}

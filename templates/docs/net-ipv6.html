@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="managing-ipv6-networks">Managing IPv6 Networks<a class="anchor" href="#managing-ipv6-networks"></a></h1>
 <p>MAAS has limited IPv6 support for networking nodes. It works much like IPv4
 support, but with a number of limitations:</p>
@@ -19,8 +25,8 @@ machine (<code>::1</code>, the IPv6 equivalent of <code>localhost</code>) you mi
 <p>If your MAAS server has a DNS hostname that resolves to both IPv4 and IPv6
 addresses, your browser may already be accessing the UI through IPv6 without you
 noticing.</p>
-<p class="note"><strong> Note</strong>: This feature is available in MAAS versions 1.7 and above. If you're 
-writing a client application that makes use of this feature, you can query the 
+<p class="note"><strong> Note</strong>: This feature is available in MAAS versions 1.7 and above. If you're
+writing a client application that makes use of this feature, you can query the
 region-server API for the <code>ipv6-deployment-ubuntu</code> capability.</p>
 <h2 id="enabling-ipv6">Enabling IPv6<a class="anchor" href="#enabling-ipv6"></a></h2>
 <p>You enable IPv6 networking in the same way that you enable IPv4 networking:
@@ -69,3 +75,4 @@ IPv6 addresses, and both on the cluster controller and on the nodes.</p>
 </code></pre>
 
 <p>It will prompt you for the URL, with its current setting as the initial value.</p>
+{% endblock %}

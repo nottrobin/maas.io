@@ -1,12 +1,18 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="adding-nodes-to-the-system">Adding nodes to the system<a class="anchor" href="#adding-nodes-to-the-system"></a></h1>
 <p>Now that the MAAS controller is running, we need to make the nodes aware
 of MAAS and vice-versa. If you have set up DHCP correctly, and your
 nodes can boot via
 <a href="http://en.wikipedia.org/wiki/Preboot_Execution_Environment">PXE</a> then
-things really couldn’t be much easier and you can use 
-<a href="#auto-enlist"><em>the automatic discovery procedure</em></a>. You do not need to 
+things really couldn’t be much easier and you can use
+<a href="#auto-enlist"><em>the automatic discovery procedure</em></a>. You do not need to
 install Ubuntu on nodes that you wish to add to MAAS prior to enlistment.</p>
-<p>To learn more about setting up DHCP, read the 
+<p>To learn more about setting up DHCP, read the
 <a href="cluster-configuration.html#cluster-configuration">cluster configuration documentation</a>.</p>
 <h2 id="automatic-discovery">Automatic Discovery<a class="anchor" href="#automatic-discovery"></a></h2>
 <p>With nodes set to boot from a PXE image, they will start, look for a
@@ -58,7 +64,7 @@ sudo chown maas:maas /home/maas
 ssh-keygen
 </code></pre>
 
-<p>Then add the public key to <code>/ubuntu/.ssh/authorized_keys</code> on the vm server so 
+<p>Then add the public key to <code>/ubuntu/.ssh/authorized_keys</code> on the vm server so
 virsh can use ssh without a password:</p>
 <pre><code class="bash">ssh-copy-id -i ~/.ssh/id_rsa ubuntu@10.0.0.2
 </code></pre>
@@ -66,3 +72,4 @@ virsh can use ssh without a password:</p>
 <p>As the maas user, test virsh commands against libvirt at 10.0.0.2:</p>
 <pre><code class="bash">virsh -c qemu+ssh://ubuntu@10.0.0.2/system list --all
 </code></pre>
+{% endblock %}

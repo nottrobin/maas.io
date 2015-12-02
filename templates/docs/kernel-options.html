@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="setting-kernel-boot-options">Setting kernel boot options<a class="anchor" href="#setting-kernel-boot-options"></a></h1>
 <p>MAAS is able to send specific kernel options to booting nodes on both a
 global basis and a per-node basis.</p>
@@ -24,3 +30,4 @@ like this:</p>
 <p class="note"><strong> Note</strong>:  Any per-node kernel options set will completely override the global
 options. If multiple tags attached to a node have the kernel_opts
 defined, the first one ordered by name is used.</p>
+{% endblock %}

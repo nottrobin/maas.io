@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="getting-help">Getting help<a class="anchor" href="#getting-help"></a></h1>
 <h2 id="where-to-get-help">Where to get help<a class="anchor" href="#where-to-get-help"></a></h2>
 <p>The two channels you can use to get help debugging a MAAS issue are:</p>
@@ -37,3 +43,4 @@ share publicly, feel free to edit the tarball.</p>
 <p>Now, the last step is to make this file available by any means at your
 disposal (openly accessible FTP server, Dropbox, etc.) in order for the
 people who will help you to be able to get their hands on it.</p>
+{% endblock %}

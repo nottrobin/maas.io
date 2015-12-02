@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h2 id="do-i-need-maas?">Do I Need MAAS?<a class="anchor" href="#do-i-need-maas?"></a></h2>
 <p>MAAS certainly isn't for everyone, but why not ask yourself these questions?</p>
 <p>You probably <em>SHOULD</em> use MAAS if any or all of the following statements are true:</p>
@@ -24,3 +30,4 @@
 <p>When allocating from the API, you can specify constraints such as how much memory you need, how many CPUs, what networks the node should be connected to, what physical zone they should be in, and so on. API commands can also be issued through the <code>maas</code> command-line utility.</p>
 <p>An allocated node is not like a virtual instance in a cloud: you get complete control, including hardware drivers and root access. To upgrade a BIOS, for example, an administrator could allocate a node to themselves, and run a vendor-supplied upgrade utility. Needless to say, you also get full hardware performance and tweaking!</p>
 <p>Once you are done with a node you have allocated, you can release it back to the pool. Once again any data, software, or operating system will no longer be available.</p>
+{% endblock %}

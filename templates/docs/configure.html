@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="additional-configuration">Additional Configuration<a class="anchor" href="#additional-configuration"></a></h1>
 <h2 id="manual-dhcp-configuration">Manual DHCP configuration<a class="anchor" href="#manual-dhcp-configuration"></a></h2>
 <p>DHCP is needed in order for MAAS to boot and control nodes. However,
@@ -221,3 +227,4 @@ file on your client host:</p>
 host running the MAAS DNS server.</p>
 <p>However, for hosts using the <code>resolvconf</code> package,
 please read its documentation for more information.</p>
+{% endblock %}

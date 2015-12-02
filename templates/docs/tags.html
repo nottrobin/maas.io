@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="making-use-of-tags">Making use of Tags<a class="anchor" href="#making-use-of-tags"></a></h1>
 <p>MAAS implements a system of tags based on the physical properties of the
 nodes. The idea behind this is that you can use the tags to identify
@@ -98,3 +104,4 @@ maas mass tag update-nodes my_tag add=&lt;system_id&gt;
 
 <p class="note"><strong> Note</strong>: If you add and remove the same node in one operation, it ends up having
 the tag removed (even if the tag was in place before the operation).</p>
+{% endblock %}

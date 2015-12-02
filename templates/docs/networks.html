@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="networks">Networks<a class="anchor" href="#networks"></a></h1>
 <p class="note"><strong> Note</strong>: This feature is available in MAAS versions 1.5 and above, starting with
 revision 1961. If you’re writing a client application, you can check if
@@ -160,3 +166,4 @@ just expressed in different ways.</p>
     <code class="docutils literal">vlan:0xD</code>, and <code class="docutils literal">vlan:0X0d</code>
     are all equivalent to <code class="docutils literal">vlan:13</code>.</li>
 </ul>
+{% endblock %}

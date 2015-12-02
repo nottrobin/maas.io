@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="networks">Networks<a class="anchor" href="#networks"></a></h1>
 <p>!!!<strong>Note:</strong> This feature is available in MAAS versions 1.5 and above, starting with revision 1961. If you're writing a client application, you can check if MAAS supports this feature via the web API; see the documentation for the <code>networks-management</code> capability here\&lt;cap-networks-management>.</p>
 <p>A MAAS cluster controller can manage nodes on one or more networks. The cluster controller must have direct interfaces connected to these networks, and each node must be managed through one of them.</p>
@@ -52,3 +58,4 @@
 <li>"<code>vlan:13</code>": a VLAN tag. This can only be used for VLANs, so the tag must be nonzero. The tag is a number between 1 to 4094 inclusive.</li>
 <li>"<code>vlan:0x0d</code>": a VLAN tag in hexadecimal notation. The valid range is from <code>0x1</code> to <code>0xffe</code> inclusive. The notation is case-insensitive and leading zeroes are ignored. So, <code>vlan:0x0d</code>, <code>vlan:0Xd</code>, <code>vlan:0xD</code>, and <code>vlan:0X0d</code> are all equivalent to <code>vlan:13</code>.</li>
 </ul>
+{% endblock %}

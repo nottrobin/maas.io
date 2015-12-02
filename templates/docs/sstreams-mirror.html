@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="local-mirroring-of-boot-images">Local Mirroring of Boot Images<a class="anchor" href="#local-mirroring-of-boot-images"></a></h1>
 <p>Boot images are delivered to MAAS via the simplestreams protocol. It is
 useful in some situations, such as testing, to mirror the images locally
@@ -17,7 +23,7 @@ simplestreams. This example gets the daily trusty (14.04) and precise
 <p>This may take a while as hundreds of megabytes will be downloaded.</p>
 <p>The images will be written to the local disk and you can verify their
 presence by browsing to
-<code>http://&lt;server&gt;/maas/images/ephemeral-v2/daily/streams/v1/index.sjson</code> 
+<code>http://&lt;server&gt;/maas/images/ephemeral-v2/daily/streams/v1/index.sjson</code>
 (replace <code>&lt;server&gt;</code> with your own server’s name).</p>
 <p>It is a good idea to configure a <code>cron</code> job to
 repeat this import on a regular basis to keep your mirror up-to-date.</p>
@@ -40,3 +46,4 @@ the Sync URL and the keyring path, which should be set as the values in
 the API example above.</p>
 <p>The import is initiated by browsing to the Images tab and following the
 instructions on that page.</p>
+{% endblock %}

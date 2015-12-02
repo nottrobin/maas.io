@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="using-hardware-enablement-kernels">Using hardware-enablement kernels<a class="anchor" href="#using-hardware-enablement-kernels"></a></h1>
 <p>!!!Note:
 This feature is available in MAAS versions 1.5 and above.</p>
@@ -16,3 +22,4 @@ This feature is available in MAAS versions 1.5 and above.</p>
 
 <p>If you specify an architecture that doesn't exist (e.g. <code>amd64/hwe-zz</code>), the <code>maas</code> command will return an error.</p>
 <p>It's also possible to use HWE kernels from the MAAS web UI, by visiting the Node's page and clicking <code>Edit node</code>. Under the Architecture field, you will be able to select any HWE kernels that have been imported onto that node's cluster controller.</p>
+{% endblock %}

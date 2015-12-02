@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="installing-ubuntu-and-deploying-nodes">Installing Ubuntu and deploying nodes<a class="anchor" href="#installing-ubuntu-and-deploying-nodes"></a></h1>
 <p>Once a node has been accepted into MAAS and is ready for use, users can
 deploy services to that node.</p>
@@ -49,10 +55,11 @@ the packages installed that would be normally found in an Ubuntu
 installation.</p>
 <p>The fast installer is much quicker than the Debian installer, but has
 the disadvantage that it’s less easy to configure a node at install
-time, since the fast installer doesn’t use a 
+time, since the fast installer doesn’t use a
 <a href="configure.html#preseed">preseed file</a>. In addition, the packages that are
 initially installed on a fast-installed node need updating manually,
 since they are part of the installation image and not downloaded fresh
 from an apt repository.</p>
 <p>For more information about the fast installer, see the <a href="https://launchpad.net/curtin">curtin
 project</a> on Launchpad.</p>
+{% endblock %}

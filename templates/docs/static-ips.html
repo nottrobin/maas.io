@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="static-ips">Static IPs<a class="anchor" href="#static-ips"></a></h1>
 <p class="note"><strong> Note</strong>: This feature is available in MAAS versions 1.6 and above. If you’re
 writing a client application, you can check if MAAS supports this
@@ -57,3 +63,4 @@ details.</p>
 registered trademarks of <a href="http://canonical.com">Canonical Ltd</a>.</p>
 <p>Revision 4036 (2015-08-05 16:30:57 +0000). Documentation generation
 date: 2015-08-12 22:30:33 +0100.</p>
+{% endblock %}

@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="operating-systems-support">Operating Systems Support<a class="anchor" href="#operating-systems-support"></a></h1>
 <p class="note"><strong> Note</strong>: This feature is available in MAAS versions 1.7 and above.</p>
 <p>Besides Ubuntu, MAAS allows users to deploy different operating systems,
@@ -18,7 +24,7 @@ this category.</p>
 <h3 id="installing-generated-images">Installing Generated Images<a class="anchor" href="#installing-generated-images"></a></h3>
 <p>Installing MAAS Generated Images (CentOS or Windows) can be done with
 the command:</p>
-<pre><code class="bash"> maas admin boot-resources create 
+<pre><code class="bash"> maas admin boot-resources create
       name=&lt;os/series&gt;
       architecture=&lt;architecture&gt; [filetype=ddtgz]
       content@=&lt;image-name&gt;
@@ -89,3 +95,4 @@ image can be uploaded with:</p>
 <pre><code class="bash">maas admin boot-resources create name=centos/centos7
       architecture=amd64/generic content@=./build-output/centos7-amd64-root-tgz
 </code></pre>
+{% endblock %}

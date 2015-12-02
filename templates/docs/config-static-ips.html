@@ -1,3 +1,9 @@
+{% extends "docs/base_index.html" %}
+
+{% block page_class %}documentation{% endblock %}
+{% block page-title %}| Documentation{% endblock %}
+
+{% block content %}
 <h1 id="static-ip-addresses">Static IP addresses<a class="anchor" href="#static-ip-addresses"></a></h1>
 <p class="note"><strong> Note</strong>: This feature is available in MAAS versions 1.6 and above. If you're writing a client application, you can check if MAAS supports this feature via the web API; see the documentation for the <code>static-ipaddresses</code> capability here\&lt;cap-static-ipaddresses>.</p>
 <p>Previously, MAAS relied on the DHCP server to allocate its own IP addresses to nodes, using the IP range defined on the relevant cluster interface. This was found to be unreliable since the IPs were only known once the node had booted and requested an address, and had race conditions when the lease expired and another machine was looking for its own IP.</p>
@@ -15,3 +21,4 @@
 <p><code>POST /api/1.0/ipaddresses/</code> <code>op=reserve</code></p>
 <p>This API allows users to request an ad-hoc IP address for use in any way they see fit. The IP is not tied to any node in MAAS and is guaranteed not to be in use by MAAS itself.</p>
 <p>See the full api documentation for precise technical details.</p>
+{% endblock %}
